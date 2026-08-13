@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Goldcook 的个人主页：强化学习、多智能体系统与自主智能体的研究手记。"
+    />
+    <meta name="theme-color" content="#f1eee5" />
+    <meta property="og:title" content="Goldcook | AI & RL" />
+    <meta
+      property="og:description"
+      content="在训练 AI，也在训练自己的好奇心。"
+    />
+    <meta property="og:type" content="website" />
+    <title>Goldcook | AI & RL</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="content.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+
+    <div class="page-grid" aria-hidden="true"></div>
+    <div class="cursor-light" aria-hidden="true"></div>
+
+    <header class="site-header" data-header>
+      <a class="wordmark" href="#top" aria-label="返回首页">
+        <span class="wordmark-mark" aria-hidden="true">G</span>
+        <span>GOLDCOOK</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="打开导航"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        data-menu-toggle
+      >
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="主导航" data-nav>
+        <a href="#about">关于</a>
+        <a href="#focus">方向</a>
+        <a href="#work">项目</a>
+        <a href="#contact">联系</a>
+      </nav>
+
+      <a
+        class="header-link"
+        href="https://github.com/goldcook"
+        target="_blank"
+        rel="noreferrer"
+      >
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-kicker reveal">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>AI STUDENT · FIELD NOTES 01</span>
+        </div>
+
+        <div class="hero-copy">
+          <p class="hero-eyebrow reveal">你好，我是 Goldcook。</p>
+          <h1 id="hero-title" class="reveal">
+            在训练 <em>AI</em>，<br />
+            也在训练自己的<br />
+            <span class="outlined">好奇心。</span>
+          </h1>
+          <p class="hero-intro reveal">
+            我关注强化学习、多智能体协作与自主智能体。这里不是一份写完的简历，
+            而是一张持续更新的研究地图。
+          </p>
+          <div class="hero-actions reveal">
+            <a class="button button-primary" href="#work">
+              看看我在做什么
+              <span aria-hidden="true">↓</span>
+            </a>
+            <a
+              class="text-link"
+              href="https://github.com/goldcook"
+              target="_blank"
+              rel="noreferrer"
+            >
+              @goldcook on GitHub
+            </a>
+          </div>
+        </div>
+
+        <div class="signal-panel reveal" aria-label="当前研究信号">
+          <div class="signal-label">
+            <span>RESEARCH SIGNAL</span>
+            <span>LIVE</span>
+          </div>
+          <button class="signal-orbit" type="button" data-signal aria-label="切换研究信号">
+            <span class="orbit orbit-one"></span>
+            <span class="orbit orbit-two"></span>
+            <span class="orbit orbit-three"></span>
+            <span class="signal-core">RL</span>
+          </button>
+          <p class="signal-message" data-signal-message>
+            REWARD IS A HINT,<br />NOT THE WHOLE ANSWER.
+          </p>
+          <div class="signal-axis" aria-hidden="true">
+            <span>EXPLORE</span>
+            <span>EXPLOIT</span>
+          </div>
+        </div>
+
+        <div class="hero-index" aria-hidden="true">01</div>
+        <div class="scroll-note" aria-hidden="true">SCROLL TO EXPLORE</div>
+      </section>
+
+      <section class="section about" id="about" aria-labelledby="about-title">
+        <div class="section-label reveal">
+          <span>01</span>
+          <span>ABOUT / 关于</span>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-title-wrap reveal">
+            <p class="microcopy">A WORK IN PROGRESS</p>
+            <h2 id="about-title">保持学习，<br />保持未完成。</h2>
+          </div>
+          <div class="about-copy reveal">
+            <p class="lead">
+              我是一个对 <strong>“智能如何学会行动”</strong> 感兴趣的 AI 学生。
+            </p>
+            <p>
+              从强化学习到多智能体系统，再到能自己拆解任务的 Agent，
+              我喜欢把模糊的问题变成可以验证的实验，也喜欢把复杂的概念讲得更清楚一点。
+            </p>
+            <p>
+              这个主页从一个很小的 MVP 开始。它会随着新的代码、失败的实验和逐渐成形的想法一起生长。
+            </p>
+          </div>
+        </div>
+
+        <div class="facts" data-facts aria-label="一些关于我的事实"></div>
+      </section>
+
+      <section class="section focus" id="focus" aria-labelledby="focus-title">
+        <div class="section-label reveal">
+          <span>02</span>
+          <span>FOCUS / 关注方向</span>
+        </div>
+
+        <div class="focus-heading reveal">
+          <h2 id="focus-title">现在，信号指向这里。</h2>
+          <p>不是标签墙，是我愿意继续追问的问题。</p>
+        </div>
+
+        <div class="focus-list" data-focus-list></div>
+      </section>
+
+      <section class="section work" id="work" aria-labelledby="work-title">
+        <div class="section-label reveal">
+          <span>03</span>
+          <span>SELECTED WORK / 公开项目</span>
+        </div>
+
+        <div class="work-heading reveal">
+          <h2 id="work-title">代码是阶段性的答案。</h2>
+          <a
+            class="text-link"
+            href="https://github.com/goldcook?tab=repositories"
+            target="_blank"
+            rel="noreferrer"
+          >
+            查看全部仓库 ↗
+          </a>
+        </div>
+
+        <div class="projects" data-projects></div>
+      </section>
+
+      <section class="section logbook" aria-labelledby="logbook-title">
+        <div class="section-label reveal">
+          <span>04</span>
+          <span>LAB LOG / 实验室手记</span>
+        </div>
+
+        <div class="logbook-layout">
+          <div class="logbook-sticky reveal">
+            <p class="microcopy">NOTES OVER NOISE</p>
+            <h2 id="logbook-title">一些尚未写成论文的念头。</h2>
+          </div>
+          <div class="notes" data-notes></div>
+        </div>
+      </section>
+
+      <section class="contact" id="contact" aria-labelledby="contact-title">
+        <p class="contact-kicker reveal">OPEN CHANNEL · 05</p>
+        <h2 id="contact-title" class="reveal">
+          有问题、有想法，<br />
+          <span>或者只是路过？</span>
+        </h2>
+        <p class="contact-copy reveal">
+          去 GitHub 看看我的代码。一个 issue，往往就是一段好对话的开始。
+        </p>
+        <a
+          class="contact-link reveal"
+          href="https://github.com/goldcook"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>github.com/goldcook</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <div class="contact-orbit" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span>HELLO</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>GOLDCOOK · <span data-year></span></p>
+      <p>LEARNING IN PUBLIC, ONE EXPERIMENT AT A TIME.</p>
+      <a href="#top">回到顶部 ↑</a>
+    </footer>
+  </body>
+</html>
