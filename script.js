@@ -53,36 +53,6 @@
       .join("");
   };
 
-  const renderProjects = () => {
-    const root = document.querySelector("[data-projects]");
-    if (!root) return;
-
-    root.innerHTML = content.projects
-      .map(
-        (project) => `
-          <a
-            class="project project-${escapeHtml(project.tone)} reveal"
-            href="${escapeHtml(project.href)}"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="查看 ${escapeHtml(project.title)} 项目"
-          >
-            <div class="project-topline">
-              <span>PROJECT / ${escapeHtml(project.index)}</span>
-              <span aria-hidden="true">↗</span>
-            </div>
-            <h3>${escapeHtml(project.title)}</h3>
-            <p>${escapeHtml(project.description)}</p>
-            <div class="project-footer">
-              <span>${escapeHtml(project.language)}</span>
-              <span>OPEN REPOSITORY</span>
-            </div>
-          </a>
-        `,
-      )
-      .join("");
-  };
-
   const renderNotes = () => {
     const root = document.querySelector("[data-notes]");
     if (!root) return;
@@ -102,7 +72,6 @@
 
   renderFacts();
   renderFocuses();
-  renderProjects();
   renderNotes();
 
   document.querySelectorAll("[data-year]").forEach((node) => {

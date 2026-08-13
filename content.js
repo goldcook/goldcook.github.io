@@ -8,8 +8,8 @@ window.SITE_CONTENT = {
     },
     {
       index: "02",
-      value: "3",
-      label: "个公开仓库，慢慢增加中",
+      value: "MVP",
+      label: "主页的当前状态，持续生长中",
     },
     {
       index: "03",
@@ -38,32 +38,6 @@ window.SITE_CONTENT = {
       titleZh: "自主智能体",
       question: "如何让 Agent 不只完成一步，而是可靠地走完整段路？",
       tags: ["Planning", "Memory", "Evaluation"],
-    },
-  ],
-  projects: [
-    {
-      index: "01",
-      title: "v-d4rl",
-      description: "在 Visual D4RL 环境里尝试不同算法，记录视觉离线强化学习的实验与实现。",
-      language: "Research",
-      href: "https://github.com/goldcook/v-d4rl",
-      tone: "red",
-    },
-    {
-      index: "02",
-      title: "Auto-GPT",
-      description: "对自主 GPT-4 实验项目的持续关注：让模型自己拆分目标、调用工具并迭代执行。",
-      language: "Python",
-      href: "https://github.com/goldcook/Auto-GPT",
-      tone: "blue",
-    },
-    {
-      index: "03",
-      title: "start",
-      description: "第一个 GitHub 练习仓库。所有复杂的系统，都从一次并不完美的开始出发。",
-      language: "Python",
-      href: "https://github.com/goldcook/start",
-      tone: "ink",
     },
   ],
   notes: [

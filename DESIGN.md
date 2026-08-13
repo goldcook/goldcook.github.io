@@ -24,4 +24,4 @@ Core tokens live in `styles.css` under `:root`.
 
 ## Content model
 
-Repeatable content is kept in `content.js`: facts, focus areas, projects, and notes. Structural copy and SEO metadata remain in `index.html` so the page is readable and indexable without JavaScript.
+Repeatable content is kept in `content.js`: facts, focus areas, and notes. Structural copy and SEO metadata remain in `index.html` so the page is readable and indexable without JavaScript.

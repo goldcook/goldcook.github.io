@@ -13,7 +13,7 @@ python3 -m http.server 4173
 ## 更新内容
 
 - 修改 `index.html` 中的个人介绍和页面固定文案。
-- 修改 `content.js` 中的关注方向、项目和实验室手记。
+- 修改 `content.js` 中的关注方向和实验室手记。
 - 修改 `styles.css` 顶部的 CSS 变量来调整主题。
 - 视觉原则和设计令牌见 `DESIGN.md`。
 
