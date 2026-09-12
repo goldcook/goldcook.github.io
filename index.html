@@ -3,18 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Goldcook 的个人主页：强化学习、多智能体系统与自主智能体的研究手记。"
-    />
-    <meta name="theme-color" content="#f1eee5" />
-    <meta property="og:title" content="Goldcook | AI & RL" />
-    <meta
-      property="og:description"
-      content="在训练 AI，也在训练自己的好奇心。"
-    />
+    <meta name="description" content="Goldcook 的人生游戏存档：从学生到职场人，继续学习，也认真生活。" />
+    <meta name="theme-color" content="#83c9e8" />
+    <meta property="og:title" content="Goldcook | New Game+" />
+    <meta property="og:description" content="从学生到职场人，Loading… 一份持续更新的人生游戏存档。" />
     <meta property="og:type" content="website" />
-    <title>Goldcook | AI & RL</title>
+    <title>Goldcook | New Game+</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
     <script src="content.js" defer></script>
@@ -23,189 +17,222 @@
   <body>
     <a class="skip-link" href="#main">跳到正文</a>
 
-    <div class="page-grid" aria-hidden="true"></div>
-    <div class="cursor-light" aria-hidden="true"></div>
-
-    <header class="site-header" data-header>
-      <a class="wordmark" href="#top" aria-label="返回首页">
-        <span class="wordmark-mark" aria-hidden="true">G</span>
-        <span>GOLDCOOK</span>
+    <header class="hud" data-header>
+      <a class="brand" href="#top" aria-label="返回首页">
+        <span class="brand-icon" aria-hidden="true">G</span>
+        <span>GOLDCOOK.EXE</span>
       </a>
-
-      <button
-        class="menu-toggle"
-        type="button"
-        aria-label="打开导航"
-        aria-expanded="false"
-        aria-controls="site-nav"
-        data-menu-toggle
-      >
-        <span></span>
-        <span></span>
-      </button>
-
-      <nav class="site-nav" id="site-nav" aria-label="主导航" data-nav>
-        <a href="#about">关于</a>
-        <a href="#focus">方向</a>
-        <a href="#contact">联系</a>
+      <nav class="desktop-nav" aria-label="主导航">
+        <a href="#save">存档</a>
+        <a href="#map">地图</a>
+        <a href="#lobby">生活</a>
+        <a href="#music">音乐</a>
+        <a href="#contact">信箱</a>
       </nav>
-
-      <a
-        class="header-link"
-        href="https://github.com/goldcook"
-        target="_blank"
-        rel="noreferrer"
-      >
-        GitHub <span aria-hidden="true">↗</span>
-      </a>
+      <div class="hud-status" aria-label="当前状态">
+        <span class="online-dot"></span><span>ONLINE</span>
+      </div>
+      <button class="menu-button" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="mobile-menu" data-menu-button>
+        <span></span><span></span><span></span>
+      </button>
     </header>
+
+    <nav class="mobile-menu" id="mobile-menu" aria-label="移动端导航" data-mobile-menu>
+      <span class="menu-title">SELECT AREA</span>
+      <a href="#save"><span>01</span> 当前存档</a>
+      <a href="#map"><span>02</span> 人生地图</a>
+      <a href="#lobby"><span>03</span> 生活侧面</a>
+      <a href="#music"><span>04</span> 音乐房间</a>
+      <a href="#contact"><span>05</span> 像素信箱</a>
+    </nav>
 
     <main id="main">
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="hero-kicker reveal">
-          <span class="status-dot" aria-hidden="true"></span>
-          <span>AI STUDENT · FIELD NOTES 01</span>
+        <div class="sky" aria-hidden="true">
+          <span class="sun"></span>
+          <span class="cloud cloud-one"></span>
+          <span class="cloud cloud-two"></span>
+          <span class="cloud cloud-three"></span>
+          <div class="far-hills"></div>
+          <div class="near-hills"></div>
+          <div class="ground"></div>
         </div>
 
-        <div class="hero-copy">
-          <p class="hero-eyebrow reveal">你好，我是 Goldcook。</p>
-          <h1 id="hero-title" class="reveal">
-            在训练 <em>AI</em>，<br />
-            也在训练自己的<br />
-            <span class="outlined">好奇心。</span>
-          </h1>
-          <p class="hero-intro reveal">
-            我关注强化学习、多智能体协作与自主智能体。这里不是一份写完的简历，
-            而是一张持续更新的研究地图。
-          </p>
-          <div class="hero-actions reveal">
-            <a class="button button-primary" href="#focus">
-              看看我在关注什么
-              <span aria-hidden="true">↓</span>
-            </a>
-            <a
-              class="text-link"
-              href="https://github.com/goldcook"
-              target="_blank"
-              rel="noreferrer"
-            >
-              @goldcook on GitHub
-            </a>
+        <div class="hero-window pixel-window reveal">
+          <div class="window-bar"><span>PLAYER_01</span><span>NEW GAME+</span></div>
+          <div class="hero-content">
+            <p class="system-line">WELCOME BACK, GOLDCOOK.</p>
+            <h1 id="hero-title">从学生到职场人，<br /><span>LOADING...</span></h1>
+            <p class="hero-copy">
+              正在学习怎么工作，也在学习怎么生活。强化学习仍是主线任务；
+              听歌、看云、唱歌和朋友联机，负责恢复生命值。
+            </p>
+            <div class="loading-block" aria-label="职场 Landing 进行中">
+              <div class="loading-meta"><span>CAREER LANDING</span><span>42%</span></div>
+              <div class="loading-track"><span class="loading-fill" data-loading-fill></span></div>
+              <p>身份转化没有攻略，先认真体验这一关。</p>
+            </div>
+            <div class="hero-actions">
+              <a class="pixel-button pixel-button-primary" href="#save">▶ 读取当前存档</a>
+              <button class="pixel-button sound-button" type="button" data-bgm-toggle aria-pressed="false">♪ 播放 BGM</button>
+            </div>
           </div>
         </div>
 
-        <div class="signal-panel reveal" aria-label="当前研究信号">
-          <div class="signal-label">
-            <span>RESEARCH SIGNAL</span>
-            <span>LIVE</span>
+        <aside class="player-card pixel-window reveal" aria-label="玩家状态">
+          <div class="window-bar"><span>STATUS</span><span>LV.01</span></div>
+          <div class="pixel-avatar" aria-hidden="true">
+            <span class="avatar-hair"></span><span class="avatar-face"></span><span class="avatar-body"></span>
+            <span class="avatar-leg left"></span><span class="avatar-leg right"></span>
           </div>
-          <button class="signal-orbit" type="button" data-signal aria-label="切换研究信号">
-            <span class="orbit orbit-one"></span>
-            <span class="orbit orbit-two"></span>
-            <span class="orbit orbit-three"></span>
-            <span class="signal-core">RL</span>
-          </button>
-          <p class="signal-message" data-signal-message>
-            REWARD IS A HINT,<br />NOT THE WHOLE ANSWER.
-          </p>
-          <div class="signal-axis" aria-hidden="true">
-            <span>EXPLORE</span>
-            <span>EXPLOIT</span>
-          </div>
-        </div>
-
-        <div class="hero-index" aria-hidden="true">01</div>
-        <div class="scroll-note" aria-hidden="true">SCROLL TO EXPLORE</div>
+          <dl class="stats-list">
+            <div><dt>NAME</dt><dd>Goldcook</dd></div>
+            <div><dt>CLASS</dt><dd>职场新人</dd></div>
+            <div><dt>MAIN QUEST</dt><dd>持续学习</dd></div>
+            <div><dt>BUFF</dt><dd>有人同行</dd></div>
+          </dl>
+          <div class="hp-row"><span>ENERGY</span><span class="hearts" aria-label="四颗爱心">♥ ♥ ♥ ♥ ♡</span></div>
+        </aside>
+        <div class="hero-tip" aria-hidden="true">PRESS ↓ TO EXPLORE</div>
       </section>
 
-      <section class="section about" id="about" aria-labelledby="about-title">
-        <div class="section-label reveal">
-          <span>01</span>
-          <span>ABOUT / 关于</span>
+      <section class="section save-section" id="save" aria-labelledby="save-title">
+        <div class="section-head reveal">
+          <p><span>01</span> SAVE FILE / 当前存档</p><span class="section-coord">X:2026 Y:NOW</span>
         </div>
-
-        <div class="about-grid">
-          <div class="about-title-wrap reveal">
-            <p class="microcopy">A WORK IN PROGRESS</p>
-            <h2 id="about-title">保持学习，<br />保持未完成。</h2>
-          </div>
-          <div class="about-copy reveal">
-            <p class="lead">
-              我是一个对 <strong>“智能如何学会行动”</strong> 感兴趣的 AI 学生。
-            </p>
+        <div class="save-layout">
+          <div class="save-intro reveal">
+            <p class="eyebrow">AUTO SAVED JUST NOW</p>
+            <h2 id="save-title">人在学习，<br />生活也在更新。</h2>
             <p>
-              从强化学习到多智能体系统，再到能自己拆解任务的 Agent，
-              我喜欢把模糊的问题变成可以验证的实验，也喜欢把复杂的概念讲得更清楚一点。
+              刚进入职场不久，正在经历从学生到上班族的 Landing。
+              独自生活并不陌生，但怎样工作、怎样休息、怎样逐渐接住成年人的责任，都是新的关卡。
             </p>
+          </div>
+          <div class="save-slot pixel-window reveal">
+            <div class="save-slot-head"><span>SLOT 01</span><span>PLAYING</span></div>
+            <div class="save-time"><strong>00:∞</strong><span>PLAY TIME</span></div>
+            <div class="save-location"><span>CURRENT LOCATION</span><strong>职场 · LANDING ZONE</strong></div>
+            <div class="party-row">
+              <span>SUPPORT PARTY</span>
+              <div class="party-members"><span title="女朋友">GF</span><span title="家人">家</span><span title="朋友">友</span></div>
+            </div>
+            <p class="save-note">物理上一个人生活，但从来不是一个人前进。</p>
+          </div>
+        </div>
+        <div class="quest-grid" data-quests></div>
+      </section>
+
+      <section class="section map-section" id="map" aria-labelledby="map-title">
+        <div class="section-head section-head-light reveal">
+          <p><span>02</span> WORLD MAP / 人生地图</p><span class="section-coord">5 AREAS FOUND</span>
+        </div>
+        <div class="map-heading reveal">
+          <div><p class="eyebrow">CHOOSE YOUR NEXT AREA</p><h2 id="map-title">地图还没有全部点亮。</h2></div>
+          <p>点击地图上的区域，查看这一阶段正在发生什么。</p>
+        </div>
+        <div class="world-map reveal">
+          <div class="map-canvas" data-map-canvas aria-label="可交互的人生地图">
+            <div class="map-river" aria-hidden="true"></div>
+            <div class="map-road road-one" aria-hidden="true"></div>
+            <div class="map-road road-two" aria-hidden="true"></div>
+            <div class="map-clouds" aria-hidden="true">☁ ☁</div>
+            <div class="map-nodes" data-map-nodes></div>
+          </div>
+          <article class="map-dialog pixel-window" aria-live="polite" data-map-dialog>
+            <div class="window-bar"><span data-map-code>AREA 01</span><span>DISCOVERED</span></div>
+            <div class="map-dialog-body">
+              <p class="map-icon" data-map-icon aria-hidden="true">✦</p>
+              <h3 data-map-name>学习平原</h3>
+              <p data-map-description>继续把不知道的事情，一点点变成知道。</p>
+              <ul data-map-items></ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section lobby-section" id="lobby" aria-labelledby="lobby-title">
+        <div class="section-head reveal">
+          <p><span>03</span> SIDE QUESTS / 生活侧面</p><span class="section-coord">HP RECOVERY AREA</span>
+        </div>
+        <div class="lobby-heading reveal">
+          <p class="eyebrow">LIFE IS NOT ONLY THE MAIN QUEST</p>
+          <h2 id="lobby-title">下班之后，进入自由探索模式。</h2>
+        </div>
+        <div class="side-quests" data-side-quests></div>
+        <div class="game-lobby pixel-window reveal">
+          <div class="window-bar"><span>MULTIPLAYER LOBBY</span><span>FRIENDS ONLINE</span></div>
+          <div class="game-lobby-copy">
+            <div><p class="eyebrow">READY?</p><h3>游戏好不好玩，<br />有时取决于和谁一起。</h3></div>
             <p>
-              这个主页从一个很小的 MVP 开始。它会随着新的代码、失败的实验和逐渐成形的想法一起生长。
+              从腾讯系竞技游戏，到 Steam 上适合一起闹腾的联机游戏。
+              胜负当然重要，但更重要的是大家还在同一个语音房间里。
             </p>
           </div>
+          <div class="game-tags" data-games aria-label="常玩的游戏"></div>
         </div>
-
-        <div class="facts" data-facts aria-label="一些关于我的事实"></div>
       </section>
 
-      <section class="section focus" id="focus" aria-labelledby="focus-title">
-        <div class="section-label reveal">
-          <span>02</span>
-          <span>FOCUS / 关注方向</span>
+      <section class="section music-section" id="music" aria-labelledby="music-title">
+        <div class="section-head section-head-light reveal">
+          <p><span>04</span> JUKEBOX / 音乐房间</p><span class="section-coord">6 TRACKS FOUND</span>
         </div>
-
-        <div class="focus-heading reveal">
-          <h2 id="focus-title">现在，信号指向这里。</h2>
-          <p>不是标签墙，是我愿意继续追问的问题。</p>
-        </div>
-
-        <div class="focus-list" data-focus-list></div>
-      </section>
-
-      <section class="section logbook" aria-labelledby="logbook-title">
-        <div class="section-label reveal">
-          <span>03</span>
-          <span>LAB LOG / 实验室手记</span>
-        </div>
-
-        <div class="logbook-layout">
-          <div class="logbook-sticky reveal">
-            <p class="microcopy">NOTES OVER NOISE</p>
-            <h2 id="logbook-title">一些尚未写成论文的念头。</h2>
+        <div class="music-layout">
+          <div class="jukebox pixel-window reveal">
+            <div class="window-bar"><span>8-BIT BGM</span><span data-bgm-status>STOPPED</span></div>
+            <div class="jukebox-screen">
+              <div class="album-pixel" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+              <div><p>ORIGINAL SOUNDTRACK</p><h2 id="music-title">Clouds After Work</h2><p>Goldcook's tiny browser band</p></div>
+            </div>
+            <div class="equalizer" aria-hidden="true" data-equalizer><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="player-controls">
+              <button class="pixel-button pixel-button-primary" type="button" data-bgm-toggle aria-pressed="false">▶ PLAY</button>
+              <label class="volume-control"><span>VOL</span><input type="range" min="0" max="100" value="35" data-volume /></label>
+            </div>
+            <p class="player-note">浏览器实时生成的原创像素旋律，不会上传或抓取版权音频。</p>
           </div>
-          <div class="notes" data-notes></div>
+          <div class="playlist reveal">
+            <div class="playlist-head">
+              <div><p class="eyebrow">RECENTLY PICKED UP</p><h3>最近收藏的几张唱片</h3></div>
+              <span>QQ MUSIC ↗</span>
+            </div>
+            <div class="track-list" data-tracks></div>
+          </div>
         </div>
       </section>
 
-      <section class="contact" id="contact" aria-labelledby="contact-title">
-        <p class="contact-kicker reveal">OPEN CHANNEL · 04</p>
-        <h2 id="contact-title" class="reveal">
-          有问题、有想法，<br />
-          <span>或者只是路过？</span>
-        </h2>
-        <p class="contact-copy reveal">
-          去 GitHub 看看我的代码。一个 issue，往往就是一段好对话的开始。
-        </p>
-        <a
-          class="contact-link reveal"
-          href="https://github.com/goldcook"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span>github.com/goldcook</span>
-          <span aria-hidden="true">↗</span>
-        </a>
+      <section class="section thoughts-section" id="thoughts" aria-labelledby="thoughts-title">
+        <div class="section-head reveal">
+          <p><span>05</span> QUEST LOG / 最近在想</p><span class="section-coord">AUTO UPDATE: OFF</span>
+        </div>
+        <div class="thoughts-layout">
+          <div class="thoughts-title reveal"><p class="eyebrow">QUESTS WITHOUT WALKTHROUGHS</p><h2 id="thoughts-title">这些问题，<br />没有标准攻略。</h2></div>
+          <ol class="thought-list" data-thoughts></ol>
+        </div>
+      </section>
 
-        <div class="contact-orbit" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span>HELLO</span>
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="night-sky" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="mailbox-scene" aria-hidden="true">
+          <div class="mailbox-flag"></div><div class="mailbox-box">@</div><div class="mailbox-post"></div><div class="mailbox-grass"></div>
+        </div>
+        <div class="contact-copy reveal">
+          <p class="eyebrow">05½ · MAILBOX</p>
+          <h2 id="contact-title">路过这里的话，<br />可以留下一封信。</h2>
+          <p>不需要知道我的电话，也不用加一个新的社交账号。GitHub 可以看到我留下的痕迹，邮箱则适合认真说几句话。</p>
+          <div class="contact-actions">
+            <a class="pixel-button pixel-button-light" href="https://github.com/goldcook" target="_blank" rel="noreferrer">GitHub ↗</a>
+            <button class="pixel-button pixel-button-accent" type="button" data-mailbox>✉ 写封邮件</button>
+          </div>
+          <p class="mail-hint" data-mail-hint>邮箱地址不会直接显示在页面上。</p>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <p>GOLDCOOK · <span data-year></span></p>
-      <p>LEARNING IN PUBLIC, ONE EXPERIMENT AT A TIME.</p>
-      <a href="#top">回到顶部 ↑</a>
+      <p>KEEP LEARNING · KEEP LIVING</p>
+      <a href="#top">↑ BACK TO START</a>
     </footer>
   </body>
 </html>

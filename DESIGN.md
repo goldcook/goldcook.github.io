@@ -1,27 +1,18 @@
 # Design Direction
 
-The site uses a **research field-notes** visual language: editorial typography, visible grids, signal diagrams, and high-contrast laboratory colors. It should feel curious and unfinished in an intentional way, not like a generic portfolio template.
+The site is a warm 16-bit RPG save file about entering working life while continuing to learn and live well.
 
 ## Five non-negotiable principles
 
-1. Use Chinese editorial typography, not dashboard typography. Large Song-style headings carry the page; mono labels only provide structure.
-2. Keep the paper-and-ink foundation. Acid green, signal red, and cyan are accents rather than decorative gradients.
-3. Every visual gesture must support the research metaphor: grids, orbits, indices, notes, and signals.
-4. Preserve asymmetry on desktop but restore a clear single-column reading order on mobile.
-5. Motion must reveal hierarchy or communicate state. It must also disappear under `prefers-reduced-motion`.
+1. The page should feel like a personal game world, not a developer dashboard or technical resume.
+2. Pixel styling comes from hard borders, stepped motion, simple shapes, map language, and game UI. It should not reduce readability.
+3. Use warm outdoor colors: sky blue, grass green, sunset coral, cream paper, and deep navy.
+4. Every section represents a game concept: loading screen, save file, world map, side quests, jukebox, quest log, and mailbox.
+5. Motion and audio are optional enhancements. The page remains understandable with reduced motion, muted audio, or JavaScript unavailable.
 
-## Tokens
+## Content boundaries
 
-Core tokens live in `styles.css` under `:root`.
-
-- Background: `--paper`, `--paper-deep`
-- Text: `--ink`, `--ink-soft`
-- Accents: `--acid`, `--red`, `--blue`
-- Display type: `--font-display`
-- Body type: `--font-body`
-- Metadata: `--font-mono`
-- Layout: `--page-padding`, `--section-gap`
-
-## Content model
-
-Repeatable content is kept in `content.js`: facts, focus areas, and notes. Structural copy and SEO metadata remain in `index.html` so the page is readable and indexable without JavaScript.
+- Do not display employer, team, title, private diary entries, private photos, or social feeds.
+- GitHub and Gmail are the only contact channels.
+- QQ Music favorites link to official song pages; copyrighted audio is never copied or hosted.
+- Repeatable content lives in `content.js` and should be curated rather than automatically synchronized.
