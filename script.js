@@ -9,6 +9,7 @@
     sides: document.querySelector("[data-side-quests]"),
     games: document.querySelector("[data-games]"),
     bgmTracks: document.querySelector("[data-bgm-tracks]"),
+    recentTracks: document.querySelector("[data-recent-tracks]"),
     growth: document.querySelector("[data-growth-items]"),
     reflections: document.querySelector("[data-reflections]"),
   };
@@ -36,6 +37,10 @@
     <button type="button" data-bgm-track-index="${index}" aria-pressed="${index === 0}">
       <span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(track.subtitle)}</strong>
     </button>`).join("");
+  roots.recentTracks.innerHTML = content.recentTracks.map((track) => `
+    <a href="${escapeHtml(track.url)}" target="_blank" rel="noopener noreferrer" aria-label="在 QQ 音乐播放 ${escapeHtml(track.title)}，歌手 ${escapeHtml(track.artist)}">
+      <span><strong>${escapeHtml(track.title)}</strong><small>${escapeHtml(track.artist)}</small></span><i>↗</i>
+    </a>`).join("");
   roots.reflections.innerHTML = content.reflections.map((item) => `
     <article class="reflection-card reveal"><span>${escapeHtml(item.code)}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p><i aria-hidden="true">→</i></article>`).join("");
 

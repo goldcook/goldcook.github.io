@@ -17,6 +17,11 @@ window.SITE_CONTENT = {
     { icon: "▣", title: "小说与小短剧", subtitle: "STORIES", description: "不一定深刻，但足够上头。休息有时候就是允许大脑暂时离线。", color: "cream" },
   ],
   games: ["英雄联盟", "无畏契约", "APEX", "胡闹厨房", "土豆兄弟", "杀戮尖塔", "求生之路", "…"],
+  recentTracks: [
+    { title: "What You Won't Do for Love", artist: "Bobby Caldwell", url: "https://y.qq.com/n/ryqq/songDetail/004ZzRxD0ZSTXu" },
+    { title: "明明 (深爱着你)", artist: "丁肆Dicey", url: "https://y.qq.com/n/ryqq/songDetail/001quxhi3e5a9V" },
+    { title: "All The Time", artist: "Bahamas", url: "https://y.qq.com/n/ryqq/songDetail/000k2wnT1wIw4M" },
+  ],
   bgmTracks: [
     {
       title: "下班后的云",

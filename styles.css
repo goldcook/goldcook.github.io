@@ -223,6 +223,17 @@ a {
 .floating-bgm-controls button { padding:.5rem; color:var(--navy); background:var(--cream); border:2px solid var(--white); font-family:var(--pixel); font-size:.34rem; cursor:pointer; }
 .floating-bgm-controls label { display:grid; gap:.3rem; color:var(--white); font-family:var(--pixel); font-size:.32rem; }
 .floating-bgm-controls input { width:100%; accent-color:var(--sun); }
+.recent-music { margin-top:.8rem; padding-top:.7rem; border-top:2px dashed rgba(255,255,255,.35); }
+.recent-music > p { margin:0 0 .55rem; color:var(--sun); font-family:var(--pixel); font-size:.36rem; }
+.recent-music > small { display:block; margin-top:.5rem; color:#c8d6e0; font-size:.66rem; }
+.recent-track-list { display:grid; gap:.35rem; }
+.recent-track-list a { display:flex; min-width:0; align-items:center; justify-content:space-between; gap:.6rem; padding:.45rem .55rem; color:var(--white); background:#203d54; border:2px solid rgba(255,255,255,.28); }
+.recent-track-list a:hover,.recent-track-list a:focus-visible { color:var(--navy); background:var(--sky-light); border-color:var(--white); }
+.recent-track-list a > span { display:grid; min-width:0; }
+.recent-track-list strong { overflow:hidden; font-size:.68rem; font-weight:700; text-overflow:ellipsis; white-space:nowrap; }
+.recent-track-list small { overflow:hidden; color:inherit; font-size:.56rem; opacity:.75; text-overflow:ellipsis; white-space:nowrap; }
+.recent-track-list i { color:var(--sun); font-family:var(--pixel); font-size:.55rem; font-style:normal; }
+.recent-track-list a:hover i,.recent-track-list a:focus-visible i { color:var(--coral); }
 
 .back-to-map {
   position: fixed;
