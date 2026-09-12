@@ -5,24 +5,17 @@
   const escapeHtml = (value) => String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
 
   const roots = {
-    quests: document.querySelector("[data-quests]"),
     map: document.querySelector("[data-map-nodes]"),
     sides: document.querySelector("[data-side-quests]"),
     games: document.querySelector("[data-games]"),
-    tracks: document.querySelector("[data-tracks]"),
+    bgmTracks: document.querySelector("[data-bgm-tracks]"),
     thoughts: document.querySelector("[data-thoughts]"),
   };
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  roots.quests.innerHTML = content.quests.map((quest) => `
-    <article class="quest-card pixel-window reveal">
-      <div class="quest-card-top"><span class="quest-icon">${escapeHtml(quest.icon)}</span><span>${escapeHtml(quest.status)}</span></div>
-      <h3>${escapeHtml(quest.title)}</h3><p>${escapeHtml(quest.description)}</p>
-      <div class="mini-progress" aria-label="进度 ${quest.progress}%"><span style="--progress:${quest.progress}%"></span></div><small>${quest.progress}%</small>
-    </article>`).join("");
-
-  roots.map.innerHTML = content.mapAreas.map((area, index) => `
-    <button class="map-node${index === 0 ? " is-active" : ""}" type="button" style="--x:${area.x}%;--y:${area.y}%" data-area-index="${index}" aria-label="查看${escapeHtml(area.name)}" aria-pressed="${index === 0}">
-      <span class="node-icon" aria-hidden="true">${escapeHtml(area.icon)}</span><span class="node-label">${escapeHtml(area.name)}</span>
+  roots.map.innerHTML = content.mapAreas.map((area) => `
+    <button class="map-node node-${escapeHtml(area.target)}" type="button" style="--x:${area.x}%;--y:${area.y}%" data-screen-target="${escapeHtml(area.target)}" aria-label="进入${escapeHtml(area.name)}">
+      <span class="node-icon" aria-hidden="true"><b>${escapeHtml(area.icon)}</b></span><span class="node-label">${escapeHtml(area.name)}</span>
     </button>`).join("");
 
   roots.sides.innerHTML = content.sideQuests.map((item) => `
@@ -32,45 +25,102 @@
     </article>`).join("");
 
   roots.games.innerHTML = content.games.map((game, index) => `<span style="--delay:${index * 55}ms">${escapeHtml(game)}</span>`).join("");
-  roots.tracks.innerHTML = content.tracks.map((track) => `
-    <a class="track" href="${escapeHtml(track.href)}" target="_blank" rel="noreferrer">
-      <span class="track-number">${escapeHtml(track.number)}</span><span class="track-title">${escapeHtml(track.title)}</span>
-      <span class="track-artist">${escapeHtml(track.artist)}</span><span class="track-arrow" aria-hidden="true">↗</span>
-    </a>`).join("");
+  roots.bgmTracks.innerHTML = content.bgmTracks.map((track, index) => `
+    <button type="button" data-bgm-track-index="${index}" aria-pressed="${index === 0}">
+      <span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(track.subtitle)}</strong>
+    </button>`).join("");
   roots.thoughts.innerHTML = content.thoughts.map((thought, index) => `
-    <li class="reveal"><span>QUEST ${String(index + 1).padStart(2, "0")}</span><p>${escapeHtml(thought)}</p><i aria-hidden="true">?</i></li>`).join("");
+    <li class="reveal"><span>OBJECTIVE ${String(index + 1).padStart(2, "0")}</span><p>${escapeHtml(thought)}</p><i aria-hidden="true">→</i></li>`).join("");
 
   document.querySelectorAll("[data-year]").forEach((node) => { node.textContent = new Date().getFullYear(); });
 
   const menuButton = document.querySelector("[data-menu-button]");
   const mobileMenu = document.querySelector("[data-mobile-menu]");
-  const setMenu = (open) => {
+  const menuBackground = [document.querySelector("main"), document.querySelector(".floating-bgm"), document.querySelector("[data-back-home]"), document.querySelector("footer")].filter(Boolean);
+  const setMenu = (open, restoreFocus = false) => {
     menuButton?.setAttribute("aria-expanded", String(open));
     menuButton?.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+    mobileMenu?.setAttribute("aria-hidden", String(!open));
     mobileMenu?.classList.toggle("is-open", open);
     document.body.classList.toggle("menu-open", open);
+    menuBackground.forEach((region) => { region.inert = open; });
+    if (open) window.requestAnimationFrame(() => mobileMenu?.querySelector("a")?.focus());
+    else if (restoreFocus) menuButton?.focus();
   };
-  menuButton?.addEventListener("click", () => setMenu(menuButton.getAttribute("aria-expanded") !== "true"));
+  menuButton?.addEventListener("click", () => {
+    const open = menuButton.getAttribute("aria-expanded") !== "true";
+    setMenu(open, !open);
+  });
   mobileMenu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menuButton?.getAttribute("aria-expanded") === "true") setMenu(false, true);
+  });
 
-  const updateMapDialog = (index) => {
-    const area = content.mapAreas[index];
-    if (!area) return;
-    document.querySelector("[data-map-code]").textContent = area.code;
-    document.querySelector("[data-map-icon]").textContent = area.icon;
-    document.querySelector("[data-map-name]").textContent = area.name;
-    document.querySelector("[data-map-description]").textContent = area.description;
-    document.querySelector("[data-map-items]").innerHTML = area.items.map((item) => `<li>+ ${escapeHtml(item)}</li>`).join("");
-    document.querySelectorAll("[data-area-index]").forEach((node) => {
-      const active = Number(node.dataset.areaIndex) === index;
-      node.classList.toggle("is-active", active);
-      node.setAttribute("aria-pressed", String(active));
+  const screens = [...document.querySelectorAll("[data-screen]")];
+  const backButton = document.querySelector("[data-back-home]");
+  const validScreens = new Set(screens.map((screen) => screen.dataset.screen));
+  const visitedScreens = new Set();
+  let lastVisitedScreen = null;
+  let returningToMap = false;
+  const showScreen = (target, historyMode = "push", moveFocus = true) => {
+    const next = validScreens.has(target) ? target : "home";
+    const current = screens.find((screen) => !screen.hidden)?.dataset.screen || "home";
+    if (next !== "home" && next !== "map") {
+      visitedScreens.add(next);
+      lastVisitedScreen = next;
+    }
+    screens.forEach((screen) => {
+      const active = screen.dataset.screen === next;
+      screen.hidden = !active;
+      screen.classList.toggle("is-active", active);
     });
+    document.querySelectorAll("[data-screen-target]").forEach((link) => {
+      if (!link.matches("nav a")) return;
+      if (link.dataset.screenTarget === next) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+    document.querySelectorAll(".map-node[data-screen-target]").forEach((node) => {
+      node.classList.toggle("is-visited", visitedScreens.has(node.dataset.screenTarget));
+      node.classList.toggle("is-current", next === "map" && node.dataset.screenTarget === lastVisitedScreen);
+    });
+    if (backButton) backButton.hidden = next === "home" || next === "map";
+    setMenu(false);
+    window.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
+    if (moveFocus) {
+      const heading = document.querySelector(`[data-screen="${next}"] h1, [data-screen="${next}"] h2`);
+      window.requestAnimationFrame(() => heading?.focus({ preventScroll: true }));
+    }
+    if (historyMode !== "none" && (next !== current || historyMode === "replace")) {
+      const url = new URL(window.location.href);
+      url.hash = next === "home" ? "" : next;
+      const state = { screen: next, fromMap: current === "map" };
+      if (historyMode === "replace") window.history.replaceState(state, "", url.toString());
+      else window.history.pushState(state, "", url.toString());
+    }
   };
-  document.querySelectorAll("[data-area-index]").forEach((node) => node.addEventListener("click", () => updateMapDialog(Number(node.dataset.areaIndex))));
-  updateMapDialog(0);
+  document.querySelectorAll("[data-screen-target]").forEach((node) => node.addEventListener("click", (event) => {
+    event.preventDefault();
+    showScreen(node.dataset.screenTarget, "push");
+  }));
+  backButton?.addEventListener("click", () => {
+    if (returningToMap) return;
+    returningToMap = true;
+    backButton.disabled = true;
+    if (window.history.state?.fromMap) window.history.back();
+    else {
+      showScreen("map", "replace");
+      returningToMap = false;
+      backButton.disabled = false;
+    }
+  });
+  window.addEventListener("popstate", () => {
+    showScreen(window.location.hash.slice(1) || "home", "none");
+    returningToMap = false;
+    if (backButton) backButton.disabled = false;
+  });
+  const initialScreen = window.location.hash.slice(1) || "home";
+  showScreen(initialScreen, validScreens.has(initialScreen) ? "none" : "replace", false);
 
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const revealNodes = document.querySelectorAll(".reveal");
   if (reducedMotion.matches || !("IntersectionObserver" in window)) revealNodes.forEach((node) => node.classList.add("is-visible"));
   else {
@@ -86,8 +136,9 @@
   let bgmTimer;
   let step = 0;
   let bgmPlaying = false;
-  const melody = [72, 76, 79, 76, 69, 72, 76, 74, 67, 71, 74, 79, 76, 74, 71, 67];
-  const bass = [48, 48, 45, 45, 41, 41, 43, 43];
+  let bgmBusy = false;
+  let lastBgmToggle = 0;
+  let currentBgmIndex = 0;
   const midiToHz = (note) => 440 * 2 ** ((note - 69) / 12);
   const playNote = (note, duration, type, volume) => {
     if (!audioContext || !masterGain) return;
@@ -102,40 +153,91 @@
     oscillator.connect(gain); gain.connect(masterGain); oscillator.start(now); oscillator.stop(now + duration + 0.03);
   };
   const tickBgm = () => {
-    playNote(melody[step % melody.length], 0.18, "square", 0.28);
-    if (step % 2 === 0) playNote(bass[(step / 2) % bass.length], 0.34, "triangle", 0.34);
+    const track = content.bgmTracks[currentBgmIndex];
+    playNote(track.melody[step % track.melody.length], Math.min(track.tempo / 1000 * 0.82, 0.2), track.lead, 0.28);
+    if (step % 2 === 0) playNote(track.bass[(step / 2) % track.bass.length], track.tempo / 1000 * 1.6, "triangle", 0.34);
     if (step % 4 === 2) playNote(84, 0.05, "square", 0.08);
     step += 1;
+  };
+  const startBgmLoop = () => {
+    clearInterval(bgmTimer);
+    step = 0;
+    tickBgm();
+    bgmTimer = window.setInterval(tickBgm, content.bgmTracks[currentBgmIndex].tempo);
   };
   const updateBgmUi = () => {
     document.querySelectorAll("[data-bgm-toggle]").forEach((button) => {
       button.setAttribute("aria-pressed", String(bgmPlaying));
-      button.textContent = bgmPlaying ? "■ 停止 BGM" : button.closest(".jukebox") ? "▶ PLAY" : "♪ 播放 BGM";
+      button.setAttribute("aria-label", bgmPlaying ? "停止 BGM" : "播放 BGM");
+      button.textContent = button.closest(".floating-bgm") ? (bgmPlaying ? "■" : "▶") : (bgmPlaying ? "■ 停止 BGM" : "♪ 播放 BGM");
     });
-    const status = document.querySelector("[data-bgm-status]");
-    if (status) status.textContent = bgmPlaying ? "PLAYING" : "STOPPED";
-    document.querySelector("[data-equalizer]")?.classList.toggle("is-playing", bgmPlaying);
+    document.querySelectorAll("[data-bgm-title]").forEach((node) => { node.textContent = content.bgmTracks[currentBgmIndex].title; });
+    document.querySelectorAll("[data-bgm-track-index]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(Number(button.dataset.bgmTrackIndex) === currentBgmIndex));
+    });
   };
   const toggleBgm = async () => {
-    if (bgmPlaying) {
-      clearInterval(bgmTimer); await audioContext?.close(); audioContext = undefined; masterGain = undefined; bgmPlaying = false; updateBgmUi(); return;
+    const now = performance.now();
+    if (bgmBusy || now - lastBgmToggle < 300) return;
+    lastBgmToggle = now;
+    bgmBusy = true;
+    document.querySelectorAll("[data-bgm-toggle]").forEach((button) => { button.disabled = true; });
+    try {
+      if (bgmPlaying) {
+        const contextToClose = audioContext;
+        clearInterval(bgmTimer); audioContext = undefined; masterGain = undefined; bgmPlaying = false; updateBgmUi();
+        await contextToClose?.close();
+        return;
+      }
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      const nextContext = new AudioContextClass();
+      const nextGain = nextContext.createGain();
+      nextGain.gain.value = Number(document.querySelector("[data-volume]")?.value || 35) / 1000;
+      nextGain.connect(nextContext.destination);
+      await nextContext.resume();
+      audioContext = nextContext; masterGain = nextGain; bgmPlaying = true; startBgmLoop(); updateBgmUi();
+    } finally {
+      bgmBusy = false;
+      document.querySelectorAll("[data-bgm-toggle]").forEach((button) => { button.disabled = false; });
     }
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContextClass) return;
-    audioContext = new AudioContextClass(); masterGain = audioContext.createGain();
-    masterGain.gain.value = Number(document.querySelector("[data-volume]")?.value || 35) / 1000;
-    masterGain.connect(audioContext.destination); await audioContext.resume(); step = 0; tickBgm();
-    bgmTimer = window.setInterval(tickBgm, 210); bgmPlaying = true; updateBgmUi();
+  };
+  const selectBgm = (index) => {
+    currentBgmIndex = (index + content.bgmTracks.length) % content.bgmTracks.length;
+    if (bgmPlaying) startBgmLoop();
+    updateBgmUi();
   };
   document.querySelectorAll("[data-bgm-toggle]").forEach((button) => button.addEventListener("click", toggleBgm));
+  document.querySelectorAll("[data-bgm-prev]").forEach((button) => button.addEventListener("click", () => selectBgm(currentBgmIndex - 1)));
+  document.querySelectorAll("[data-bgm-next]").forEach((button) => button.addEventListener("click", () => selectBgm(currentBgmIndex + 1)));
+  document.querySelectorAll("[data-bgm-track-index]").forEach((button) => button.addEventListener("click", () => selectBgm(Number(button.dataset.bgmTrackIndex))));
   document.querySelector("[data-volume]")?.addEventListener("input", (event) => { if (masterGain) masterGain.gain.value = Number(event.target.value) / 1000; });
 
-  document.querySelector("[data-mailbox]")?.addEventListener("click", () => {
-    const address = ["goldcook4", "gmail.com"].join("@");
-    window.location.href = `mailto:${address}?subject=${encodeURIComponent("Hello from goldcook.github.io")}`;
-    const hint = document.querySelector("[data-mail-hint]");
-    if (hint) hint.textContent = `已尝试打开邮件应用 · ${address}`;
+  const bgmPanelButton = document.querySelector("[data-bgm-panel-toggle]");
+  const bgmPanel = document.querySelector("[data-bgm-panel]");
+  bgmPanelButton?.addEventListener("click", () => {
+    const open = bgmPanelButton.getAttribute("aria-expanded") !== "true";
+    bgmPanelButton.setAttribute("aria-expanded", String(open));
+    bgmPanel?.classList.toggle("is-open", open);
+    const icon = document.querySelector("[data-bgm-panel-icon]");
+    if (icon) icon.textContent = open ? "−" : "+";
   });
+  document.addEventListener("click", (event) => {
+    if (!bgmPanel?.classList.contains("is-open") || event.target.closest("[data-floating-bgm]")) return;
+    bgmPanel.classList.remove("is-open");
+    bgmPanelButton?.setAttribute("aria-expanded", "false");
+    const icon = document.querySelector("[data-bgm-panel-icon]");
+    if (icon) icon.textContent = "+";
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !bgmPanel?.classList.contains("is-open")) return;
+    bgmPanel.classList.remove("is-open");
+    bgmPanelButton?.setAttribute("aria-expanded", "false");
+    const icon = document.querySelector("[data-bgm-panel-icon]");
+    if (icon) icon.textContent = "+";
+    bgmPanelButton?.focus();
+  });
+  updateBgmUi();
 
   const header = document.querySelector("[data-header]");
   window.addEventListener("scroll", () => header?.classList.toggle("is-scrolled", window.scrollY > 24), { passive: true });
