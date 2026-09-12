@@ -3,22 +3,125 @@
   if (!content) return;
 
   const escapeHtml = (value) => String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+  const getSafeHref = (value, allowMailto = false) => {
+    const href = String(value || "").trim();
+    if (!href) return null;
+    try {
+      const protocol = new URL(href, window.location.origin).protocol;
+      return ["http:", "https:", ...(allowMailto ? ["mailto:"] : [])].includes(protocol) ? href : null;
+    } catch {
+      return null;
+    }
+  };
 
   const roots = {
+    editionLabel: document.querySelector("[data-edition-label]"),
+    editionDate: document.querySelector("[data-edition-date]"),
     map: document.querySelector("[data-map-nodes]"),
+    mapCount: document.querySelector("[data-map-count]"),
+    mapRoutes: document.querySelector("[data-map-routes]"),
+    treeNodes: document.querySelector("[data-tree-nodes]"),
+    treeCount: document.querySelector("[data-tree-count]"),
+    treeRoutes: document.querySelector("[data-tree-routes]"),
+    socialLinks: document.querySelector("[data-social-links]"),
+    notesEmpty: document.querySelector("[data-notes-empty]"),
+    notesList: document.querySelector("[data-notes-list]"),
+    notesStatus: document.querySelector("[data-notes-status]"),
+    privateCode: document.querySelector("[data-private-code]"),
+    privateEyebrow: document.querySelector("[data-private-eyebrow]"),
+    privateHeadline: document.querySelector("[data-private-headline]"),
+    privateLead: document.querySelector("[data-private-lead]"),
+    privateQuote: document.querySelector("[data-private-quote]"),
+    privateRecords: document.querySelector("[data-private-records]"),
+    privateCollection: document.querySelector("[data-private-collection]"),
+    privateCollections: document.querySelector("[data-private-collections]"),
     sides: document.querySelector("[data-side-quests]"),
-    games: document.querySelector("[data-games]"),
     bgmTracks: document.querySelector("[data-bgm-tracks]"),
     recentTracks: document.querySelector("[data-recent-tracks]"),
     growth: document.querySelector("[data-growth-items]"),
     reflections: document.querySelector("[data-reflections]"),
   };
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const isLocalPreview = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
+
+  if (content.siteEdition) {
+    roots.editionLabel.textContent = content.siteEdition.label;
+    roots.editionDate.textContent = content.siteEdition.date;
+    roots.editionDate.dateTime = content.siteEdition.isoDate;
+  }
 
   roots.map.innerHTML = content.mapAreas.map((area) => `
     <button class="map-node node-${escapeHtml(area.target)}" type="button" style="--x:${area.x}%;--y:${area.y}%" data-screen-target="${escapeHtml(area.target)}" aria-label="进入${escapeHtml(area.name)}">
       <span class="node-icon" aria-hidden="true"><b>${escapeHtml(area.icon)}</b></span><span class="node-label">${escapeHtml(area.name)}</span>
     </button>`).join("");
+  roots.mapCount.textContent = `${content.mapAreas.length} AREAS FOUND`;
+  roots.mapRoutes.innerHTML = content.mapAreas.map((area) => {
+    const controlX = 50 + (area.x - 50) * 0.55;
+    const controlY = 58 + (area.y - 58) * 0.45;
+    return `<path d="M50 58 C${controlX} ${controlY} ${controlX} ${area.y} ${area.x} ${area.y}" /><circle cx="${area.x}" cy="${area.y}" r="1.2" />`;
+  }).join("");
+
+  const socialLinks = Array.isArray(content.socialLinks)
+    ? content.socialLinks.map((link) => ({ ...link, safeUrl: getSafeHref(link.url, true) })).filter((link) => link.safeUrl)
+    : [];
+  roots.socialLinks.hidden = socialLinks.length === 0;
+  roots.socialLinks.innerHTML = socialLinks.map((link) => `
+    <a href="${escapeHtml(link.safeUrl)}" target="_blank" rel="noopener noreferrer"><span>${escapeHtml(link.label)}</span><i aria-hidden="true">↗</i></a>`).join("");
+
+  roots.treeNodes.innerHTML = content.lifeStages.map((stage, index) => `
+    <button class="tree-node tree-node-${escapeHtml(stage.accent)}" type="button" style="--x:${stage.x}%;--y:${stage.y}%" data-tree-stage="${index}" aria-pressed="${index === content.lifeStages.length - 1}">
+      <span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(stage.title)}</strong><i class="tree-node-lock" aria-label="私人档案已上锁"></i>
+    </button>`).join("");
+  roots.treeCount.textContent = `${content.lifeStages.length} CHAPTERS FOUND`;
+  const treeY = content.lifeStages.map((stage) => stage.y);
+  const trunkTop = Math.max(4, Math.min(...treeY) - 7);
+  const trunkBottom = Math.min(96, Math.max(...treeY) + 16);
+  roots.treeRoutes.innerHTML = [
+    `<path class="tree-trunk" d="M50 ${trunkBottom} C49 ${trunkBottom - 20} 51 ${trunkTop + 20} 50 ${trunkTop}" />`,
+    ...content.lifeStages.map((stage) => `<path d="M50 ${stage.y} C${50 + (stage.x - 50) * 0.35} ${stage.y} ${50 + (stage.x - 50) * 0.7} ${stage.y} ${stage.x} ${stage.y}" /><circle cx="50" cy="${stage.y}" r="1" />`),
+  ].join("");
+
+  let privateTimelineContent = null;
+  const getStoredTreeStageIndex = () => {
+    if (!isLocalPreview) return Number.NaN;
+    try { return Number.parseInt(window.sessionStorage.getItem("goldcook-tree-stage") || "", 10); }
+    catch { return Number.NaN; }
+  };
+  const storedTreeStageIndex = getStoredTreeStageIndex();
+  let selectedTreeStageIndex = Number.isInteger(storedTreeStageIndex) && content.lifeStages[storedTreeStageIndex]
+    ? storedTreeStageIndex
+    : content.lifeStages.length - 1;
+  const treeDetail = {
+    code: document.querySelector("[data-tree-detail-code]"),
+    title: document.querySelector("[data-tree-detail-title]"),
+    summary: document.querySelector("[data-tree-detail-summary]"),
+    tags: document.querySelector("[data-tree-detail-tags]"),
+    privateOpen: document.querySelector("[data-private-open]"),
+    privateOpenLabel: document.querySelector("[data-private-open-label]"),
+  };
+  const updatePrivateArchiveButton = () => {
+    const stage = content.lifeStages[selectedTreeStageIndex];
+    const hasLocalEntry = Boolean(stage?.privateId && privateTimelineContent?.[stage.privateId]);
+    treeDetail.privateOpen.disabled = !hasLocalEntry;
+    treeDetail.privateOpenLabel.textContent = hasLocalEntry ? "解锁本机档案 →" : privateTimelineContent ? "私人档案 · 待整理" : "私人档案 · 已上锁";
+  };
+  const selectTreeStage = (index) => {
+    const stage = content.lifeStages[index];
+    if (!stage) return;
+    selectedTreeStageIndex = index;
+    if (isLocalPreview) {
+      try { window.sessionStorage.setItem("goldcook-tree-stage", String(index)); }
+      catch { /* The archive still works when browser storage is unavailable. */ }
+    }
+    treeDetail.code.textContent = stage.code;
+    treeDetail.title.textContent = stage.title;
+    treeDetail.summary.textContent = stage.summary;
+    treeDetail.tags.innerHTML = stage.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+    document.querySelectorAll("[data-tree-stage]").forEach((button) => button.setAttribute("aria-pressed", String(Number(button.dataset.treeStage) === index)));
+    updatePrivateArchiveButton();
+  };
+  document.querySelectorAll("[data-tree-stage]").forEach((button) => button.addEventListener("click", () => selectTreeStage(Number(button.dataset.treeStage))));
+  selectTreeStage(selectedTreeStageIndex);
 
   roots.growth.innerHTML = content.growthItems.map((item) => `
     <article class="growth-card pixel-window reveal">
@@ -32,7 +135,6 @@
       <h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p>
     </article>`).join("");
 
-  roots.games.innerHTML = content.games.map((game, index) => `<span style="--delay:${index * 55}ms">${escapeHtml(game)}</span>`).join("");
   roots.bgmTracks.innerHTML = content.bgmTracks.map((track, index) => `
     <button type="button" data-bgm-track-index="${index}" aria-pressed="${index === 0}">
       <span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(track.subtitle)}</strong>
@@ -42,7 +144,20 @@
       <span><strong>${escapeHtml(track.title)}</strong><small>${escapeHtml(track.artist)}</small></span><i>↗</i>
     </a>`).join("");
   roots.reflections.innerHTML = content.reflections.map((item) => `
-    <article class="reflection-card reveal"><span>${escapeHtml(item.code)}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p><i aria-hidden="true">→</i></article>`).join("");
+    <article class="reflection-card reveal"><span>${escapeHtml(item.code)}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></article>`).join("");
+
+  const notes = Array.isArray(content.notes) ? content.notes : [];
+  roots.notesEmpty.hidden = notes.length > 0;
+  roots.notesList.hidden = notes.length === 0;
+  roots.notesStatus.textContent = notes.length > 0 ? `${notes.length} NOTES` : "COMING SOON";
+  roots.notesList.innerHTML = notes.map((note, index) => {
+    const body = `<span>${escapeHtml(note.tag || `NOTE ${String(index + 1).padStart(2, "0")}`)}</span><h3>${escapeHtml(note.title)}</h3><p>${escapeHtml(note.excerpt || "")}</p>`;
+    const safeUrl = getSafeHref(note.url);
+    const externalAttributes = /^https?:\/\//i.test(safeUrl || "") ? ' target="_blank" rel="noopener noreferrer"' : "";
+    return safeUrl
+      ? `<a class="note-card" href="${escapeHtml(safeUrl)}"${externalAttributes}>${body}<i aria-hidden="true">READ →</i></a>`
+      : `<article class="note-card">${body}</article>`;
+  }).join("");
 
   document.querySelectorAll("[data-year]").forEach((node) => { node.textContent = new Date().getFullYear(); });
 
@@ -70,10 +185,11 @@
 
   const screens = [...document.querySelectorAll("[data-screen]")];
   const backButton = document.querySelector("[data-back-home]");
-  const validScreens = new Set(screens.map((screen) => screen.dataset.screen));
+  const validScreens = new Set(screens.filter((screen) => !screen.hasAttribute("data-private-screen")).map((screen) => screen.dataset.screen));
   const visitedScreens = new Set();
   let lastVisitedScreen = null;
   let returningToMap = false;
+  const screenParents = { "private-archive": "timeline" };
   const screenAliases = { save: "work", thoughts: "growth", lobby: "life" };
   const showScreen = (target, historyMode = "push", moveFocus = true) => {
     const normalizedTarget = screenAliases[target] || target;
@@ -97,7 +213,10 @@
       node.classList.toggle("is-visited", visitedScreens.has(node.dataset.screenTarget));
       node.classList.toggle("is-current", next === "map" && node.dataset.screenTarget === lastVisitedScreen);
     });
-    if (backButton) backButton.hidden = next === "home" || next === "map";
+    if (backButton) {
+      backButton.hidden = next === "home" || next === "map";
+      backButton.textContent = screenParents[next] ? "← 返回背景故事" : "← 返回地图";
+    }
     setMenu(false);
     window.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
     if (moveFocus) {
@@ -116,10 +235,41 @@
     event.preventDefault();
     showScreen(node.dataset.screenTarget, "push");
   }));
+  const renderPrivateArchive = (entry) => {
+    roots.privateCode.textContent = entry.code;
+    roots.privateEyebrow.textContent = entry.eyebrow;
+    roots.privateHeadline.textContent = entry.headline;
+    roots.privateLead.textContent = entry.lead;
+    roots.privateQuote.textContent = entry.quote;
+    roots.privateRecords.dataset.count = String(entry.records.length);
+    roots.privateRecords.innerHTML = entry.records.map((record) => `
+      <article class="private-record-card pixel-window reveal is-visible">
+        <span>${escapeHtml(record.code)}</span><h3>${escapeHtml(record.title)}</h3><p>${escapeHtml(record.description)}</p>
+      </article>`).join("");
+    const collections = entry.collections || [];
+    roots.privateRecords.classList.toggle("has-collection", collections.length > 0);
+    roots.privateCollection.hidden = collections.length === 0;
+    roots.privateCollections.innerHTML = collections.map((group) => `
+      <div><strong>${escapeHtml(group.label)}</strong><p>${group.items.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</p></div>`).join("");
+  };
+  treeDetail.privateOpen?.addEventListener("click", () => {
+    const stage = content.lifeStages[selectedTreeStageIndex];
+    const entry = stage?.privateId ? privateTimelineContent?.[stage.privateId] : null;
+    if (!entry) return;
+    renderPrivateArchive(entry);
+    showScreen("private-archive", "push");
+  });
   backButton?.addEventListener("click", () => {
     if (returningToMap) return;
     returningToMap = true;
     backButton.disabled = true;
+    const current = screens.find((screen) => !screen.hidden)?.dataset.screen || "home";
+    if (screenParents[current]) {
+      showScreen(screenParents[current], "replace");
+      returningToMap = false;
+      backButton.disabled = false;
+      return;
+    }
     if (window.history.state?.fromMap) window.history.back();
     else {
       showScreen("map", "replace");
@@ -133,7 +283,30 @@
     if (backButton) backButton.disabled = false;
   });
   const initialScreen = window.location.hash.slice(1) || "home";
-  showScreen(initialScreen, validScreens.has(initialScreen) ? "none" : "replace", false);
+  const restorePrivateArchive = isLocalPreview && initialScreen === "private-archive";
+  showScreen(restorePrivateArchive ? "timeline" : initialScreen, validScreens.has(initialScreen) || restorePrivateArchive ? "none" : "replace", false);
+
+  if (isLocalPreview) {
+    const privateScript = document.createElement("script");
+    privateScript.src = `private/timeline.local.js?v=${Date.now()}`;
+    privateScript.onload = () => {
+      privateTimelineContent = window.PRIVATE_TIMELINE_CONTENT || null;
+      if (privateTimelineContent) {
+        validScreens.add("private-archive");
+        document.body.classList.add("has-private-archive");
+        updatePrivateArchiveButton();
+        if (restorePrivateArchive) {
+          const stage = content.lifeStages[selectedTreeStageIndex];
+          const entry = stage?.privateId ? privateTimelineContent[stage.privateId] : null;
+          if (entry) {
+            renderPrivateArchive(entry);
+            showScreen("private-archive", "none", false);
+          }
+        }
+      }
+    };
+    document.head.append(privateScript);
+  }
 
   const revealNodes = document.querySelectorAll(".reveal");
   if (reducedMotion.matches || !("IntersectionObserver" in window)) revealNodes.forEach((node) => node.classList.add("is-visible"));
@@ -143,24 +316,9 @@
     }), { rootMargin: "0px 0px -8%", threshold: 0.08 });
     revealNodes.forEach((node) => observer.observe(node));
   }
-  const ageValues = [...document.querySelectorAll("[data-age-value]")];
-  const finishAgeLoading = () => {
-    ageValues.forEach((node) => { node.textContent = "25"; });
+  window.requestAnimationFrame(() => {
     document.querySelectorAll("[data-age-fill]").forEach((node) => node.classList.add("is-loaded"));
-  };
-  if (reducedMotion.matches) finishAgeLoading();
-  else {
-    document.querySelectorAll("[data-age-fill]").forEach((node) => node.classList.add("is-loaded"));
-    const startedAt = performance.now();
-    const animateAge = (now) => {
-      const progress = Math.min((now - startedAt) / 1500, 1);
-      const value = Math.round(progress * 25);
-      ageValues.forEach((node) => { node.textContent = String(value).padStart(2, "0"); });
-      if (progress < 1) window.requestAnimationFrame(animateAge);
-      else finishAgeLoading();
-    };
-    window.requestAnimationFrame(animateAge);
-  }
+  });
 
   let audioContext;
   let masterGain;
@@ -253,26 +411,26 @@
 
   const bgmPanelButton = document.querySelector("[data-bgm-panel-toggle]");
   const bgmPanel = document.querySelector("[data-bgm-panel]");
-  bgmPanelButton?.addEventListener("click", () => {
-    const open = bgmPanelButton.getAttribute("aria-expanded") !== "true";
-    bgmPanelButton.setAttribute("aria-expanded", String(open));
+  const bgmRoot = document.querySelector("[data-floating-bgm]");
+  const setBgmPanel = (open) => {
+    bgmPanelButton?.setAttribute("aria-expanded", String(open));
+    bgmPanelButton?.setAttribute("aria-label", open ? "收起音乐播放器" : "打开音乐播放器");
     bgmPanel?.classList.toggle("is-open", open);
+    bgmRoot?.classList.toggle("is-expanded", open);
     const icon = document.querySelector("[data-bgm-panel-icon]");
     if (icon) icon.textContent = open ? "−" : "+";
+  };
+  bgmPanelButton?.addEventListener("click", () => {
+    const open = bgmPanelButton.getAttribute("aria-expanded") !== "true";
+    setBgmPanel(open);
   });
   document.addEventListener("click", (event) => {
     if (!bgmPanel?.classList.contains("is-open") || event.target.closest("[data-floating-bgm]")) return;
-    bgmPanel.classList.remove("is-open");
-    bgmPanelButton?.setAttribute("aria-expanded", "false");
-    const icon = document.querySelector("[data-bgm-panel-icon]");
-    if (icon) icon.textContent = "+";
+    setBgmPanel(false);
   });
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape" || !bgmPanel?.classList.contains("is-open")) return;
-    bgmPanel.classList.remove("is-open");
-    bgmPanelButton?.setAttribute("aria-expanded", "false");
-    const icon = document.querySelector("[data-bgm-panel-icon]");
-    if (icon) icon.textContent = "+";
+    setBgmPanel(false);
     bgmPanelButton?.focus();
   });
   updateBgmUi();

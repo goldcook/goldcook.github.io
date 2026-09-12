@@ -1,27 +1,45 @@
 // Edit this file to update the repeatable content on the homepage.
 window.SITE_CONTENT = {
+  siteEdition: {
+    label: "第一版",
+    date: "2026.09.12",
+    isoDate: "2026-09-12",
+  },
   mapAreas: [
-    { name: "工作城", icon: "▣", x: 18, y: 30, target: "work" },
-    { name: "成长营地", icon: "↑", x: 42, y: 20, target: "growth" },
-    { name: "生活村", icon: "⌂", x: 80, y: 30, target: "life" },
-    { name: "思考塔", icon: "?", x: 79, y: 70, target: "reflection" },
-    { name: "像素信箱", icon: "@", x: 25, y: 70, target: "contact" },
+    { name: "工作城镇", icon: "▣", x: 18, y: 30, target: "work" },
+    { name: "学习营地", icon: "↑", x: 42, y: 20, target: "growth" },
+    { name: "生活村落", icon: "⌂", x: 80, y: 30, target: "life" },
+    { name: "思考高塔", icon: "?", x: 79, y: 70, target: "reflection" },
+    { name: "来信驿站", icon: "@", x: 25, y: 70, target: "contact" },
+    { name: "杂谈书屋", icon: "▤", x: 52, y: 82, target: "notes" },
+  ],
+  // These stay invisible until a future update adds public profiles or writing.
+  socialLinks: [],
+  notes: [],
+  lifeStages: [
+    { code: "CHAPTER 01", title: "儿时", summary: "在小镇长大。家人在身边，放学后的伙伴、山野和周末游戏，组成了一段快乐的童年。", tags: ["小镇", "家人", "玩乐与阅读"], x: 68, y: 76, accent: "peach", privateId: "childhood" },
+    { code: "CHAPTER 02", title: "中学", summary: "离家越来越远，世界也越来越大。初中灿烂顺心，高中则多了一点压力、独处与成长。", tags: ["离乡", "游戏与音乐", "成长"], x: 32, y: 56, accent: "sun", privateId: "middleSchool" },
+    { code: "CHAPTER 03", title: "大学", summary: "离开熟悉的环境，去看更大的世界。在人工智能与强化学习中探索，也在校园、科研与实践之间逐渐认识自己、走向现实。", tags: ["离家成长", "强化学习", "走向实践"], x: 68, y: 36, accent: "blue", privateId: "university" },
+    { code: "CHAPTER 04 · NOW", title: "进入职场", summary: "刚进入算法工作，正在学习协作、使用 AI、建立专业能力，也在重新理解工作、生活和成年人的责任。", tags: ["算法工作", "AI 协作", "工作与生活"], x: 32, y: 16, accent: "coral", privateId: "career" },
   ],
   growthItems: [
-    { code: "QUEST 01", icon: "+", title: "持续学习", description: "对新问题保有耐心和好奇，把每天的输入变成真实经验。" },
-    { code: "QUEST 02", icon: "RL", title: "深入强化学习", description: "继续理解强化学习，也让研究方向和工作中的问题彼此连接。" },
+    { code: "QUEST 01", icon: "WK", title: "学会工作", description: "在真实业务里学习协作、表达、判断和解决问题。" },
+    { code: "QUEST 02", icon: "AI", title: "学习前沿", description: "关注 AI，继续理解强化学习，也学习怎样真正用好 AI。" },
+    { code: "QUEST 03", icon: "+", title: "学会生活", description: "培养运动、理财等通用能力，让生活拥有更稳固的支点。" },
   ],
   sideQuests: [
+    { icon: "♫", title: "音乐", subtitle: "MUSIC", description: "歌单很长，曲风很杂。喜欢听，也喜欢自己唱几句。", color: "peach" },
+    { icon: "▣", title: "小说短剧", subtitle: "STORIES", description: "不一定深刻，但足够上头。休息有时候就是允许大脑暂时离线。", color: "cream" },
+    { icon: "◆", title: "联机游戏", subtitle: "MULTIPLAYER", description: "竞技、合作、闹腾都行。重点不是输赢，而是朋友还在语音里。", color: "green" },
     { icon: "☁", title: "看云", subtitle: "CLOUD WATCHING", description: "没有目标，也没有打卡。只是偶尔抬头，看看今天的天空刷出了什么。", color: "sky" },
-    { icon: "♫", title: "听歌与唱歌", subtitle: "MUSIC & SINGING", description: "歌单很长，曲风很杂。喜欢听，也喜欢自己唱几句。", color: "peach" },
-    { icon: "▣", title: "小说与小短剧", subtitle: "STORIES", description: "不一定深刻，但足够上头。休息有时候就是允许大脑暂时离线。", color: "cream" },
   ],
-  games: ["英雄联盟", "无畏契约", "APEX", "胡闹厨房", "土豆兄弟", "杀戮尖塔", "求生之路", "…"],
+  // QQ_MUSIC_SYNC_START
   recentTracks: [
-    { title: "What You Won't Do for Love", artist: "Bobby Caldwell", url: "https://y.qq.com/n/ryqq/songDetail/004ZzRxD0ZSTXu" },
+    { title: "画", artist: "赵雷", url: "https://y.qq.com/n/ryqq/songDetail/003ThnHE0lOP3W" },
     { title: "明明 (深爱着你)", artist: "丁肆Dicey", url: "https://y.qq.com/n/ryqq/songDetail/001quxhi3e5a9V" },
     { title: "All The Time", artist: "Bahamas", url: "https://y.qq.com/n/ryqq/songDetail/000k2wnT1wIw4M" },
   ],
+  // QQ_MUSIC_SYNC_END
   bgmTracks: [
     {
       title: "下班后的云",
@@ -61,8 +79,8 @@ window.SITE_CONTENT = {
     },
   ],
   reflections: [
-    { code: "SIGNAL 01", title: "更好地使用 AI", description: "不只感慨它的强大，也认真学习怎么用，并帮助身边的人一起用。" },
-    { code: "SIGNAL 02", title: "守住生活的边界", description: "学会平衡工作与生活，不让自己只剩下被消耗的状态。" },
-    { code: "SIGNAL 03", title: "接住成年人的责任", description: "身份在变化，也开始理解那些随之而来的关系、选择与责任。" },
+    { code: "SIGNAL 01", title: "工作不是全部", description: "认真工作，也要守住生活的边界，不让自己只剩下被消耗的状态。" },
+    { code: "SIGNAL 02", title: "接受新的责任", description: "成为成年人，也开始更认真地理解家人、关系、选择和责任。" },
+    { code: "SIGNAL 03", title: "想要怎样生活", description: "不只规划下一份工作，也在想更长远、更健康、更自由的生活方式。" },
   ],
 };
