@@ -19,8 +19,8 @@ window.SITE_CONTENT = {
   games: ["英雄联盟", "无畏契约", "APEX", "胡闹厨房", "土豆兄弟", "杀戮尖塔", "求生之路", "…"],
   bgmTracks: [
     {
-      title: "霓虹晚风",
-      subtitle: "流行 · CITY POP",
+      title: "下班后的云",
+      subtitle: "舒缓模式",
       tempo: 360,
       lead: "sine",
       duration: 0.58,
@@ -31,8 +31,8 @@ window.SITE_CONTENT = {
       accentEvery: 8,
     },
     {
-      title: "散步副歌",
-      subtitle: "轻快 · FOLK POP",
+      title: "散步练习",
+      subtitle: "轻松模式",
       tempo: 235,
       lead: "triangle",
       duration: 0.18,
@@ -43,8 +43,8 @@ window.SITE_CONTENT = {
       accentEvery: 4,
     },
     {
-      title: "摇滚联机",
-      subtitle: "热闹 · POP ROCK",
+      title: "周末联机厅",
+      subtitle: "欢快模式",
       tempo: 125,
       lead: "sawtooth",
       duration: 0.09,
