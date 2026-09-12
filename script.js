@@ -138,7 +138,24 @@
     }), { rootMargin: "0px 0px -8%", threshold: 0.08 });
     revealNodes.forEach((node) => observer.observe(node));
   }
-  requestAnimationFrame(() => document.querySelector("[data-loading-fill]")?.classList.add("is-loaded"));
+  const ageValues = [...document.querySelectorAll("[data-age-value]")];
+  const finishAgeLoading = () => {
+    ageValues.forEach((node) => { node.textContent = "25"; });
+    document.querySelectorAll("[data-age-fill]").forEach((node) => node.classList.add("is-loaded"));
+  };
+  if (reducedMotion.matches) finishAgeLoading();
+  else {
+    document.querySelectorAll("[data-age-fill]").forEach((node) => node.classList.add("is-loaded"));
+    const startedAt = performance.now();
+    const animateAge = (now) => {
+      const progress = Math.min((now - startedAt) / 1500, 1);
+      const value = Math.round(progress * 25);
+      ageValues.forEach((node) => { node.textContent = String(value).padStart(2, "0"); });
+      if (progress < 1) window.requestAnimationFrame(animateAge);
+      else finishAgeLoading();
+    };
+    window.requestAnimationFrame(animateAge);
+  }
 
   let audioContext;
   let masterGain;

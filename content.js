@@ -4,7 +4,7 @@ window.SITE_CONTENT = {
     { name: "工作城", icon: "▣", x: 19, y: 25, target: "work" },
     { name: "成长营地", icon: "↑", x: 50, y: 18, target: "growth" },
     { name: "生活村", icon: "⌂", x: 80, y: 28, target: "life" },
-    { name: "思考塔", icon: "?", x: 70, y: 75, target: "reflection" },
+    { name: "思考塔", icon: "?", x: 76, y: 75, target: "reflection" },
     { name: "像素信箱", icon: "@", x: 25, y: 75, target: "contact" },
   ],
   growthItems: [
@@ -19,8 +19,8 @@ window.SITE_CONTENT = {
   games: ["英雄联盟", "无畏契约", "APEX", "胡闹厨房", "土豆兄弟", "杀戮尖塔", "求生之路", "…"],
   bgmTracks: [
     {
-      title: "晚风与云",
-      subtitle: "松弛 · SOUL SUNSET",
+      title: "霓虹晚风",
+      subtitle: "流行 · CITY POP",
       tempo: 360,
       lead: "sine",
       duration: 0.58,
@@ -31,8 +31,8 @@ window.SITE_CONTENT = {
       accentEvery: 8,
     },
     {
-      title: "散步练习",
-      subtitle: "轻快 · INDIE WALK",
+      title: "散步副歌",
+      subtitle: "轻快 · FOLK POP",
       tempo: 235,
       lead: "triangle",
       duration: 0.18,
@@ -43,10 +43,10 @@ window.SITE_CONTENT = {
       accentEvery: 4,
     },
     {
-      title: "好友已上线",
-      subtitle: "热闹 · ARCADE NIGHT",
+      title: "摇滚联机",
+      subtitle: "热闹 · POP ROCK",
       tempo: 125,
-      lead: "square",
+      lead: "sawtooth",
       duration: 0.09,
       melody: [72, 72, 79, 76, 74, 74, 81, 79, 72, 76, 79, 84, 83, 79, 76, 74],
       bass: [36, 36, 43, 43, 41, 41, 38, 43],
