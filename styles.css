@@ -438,7 +438,7 @@ a {
   transition: width 1.5s steps(25);
 }
 
-.loading-fill.is-loaded { width: 100%; }
+.loading-fill.is-loaded { width: 25%; }
 
 .loading-block p {
   margin: 0;
@@ -642,19 +642,15 @@ a {
 .biome-contact i { bottom:10%; width:4%; height:24%; background:#55794b; }
 .biome-contact i::before { position:absolute; bottom:75%; left:-75%; width:250%; aspect-ratio:1; content:""; background:var(--peach); clip-path:polygon(50% 0,62% 37%,100% 50%,62% 63%,50% 100%,38% 63%,0 50%,38% 37%); }
 .biome-contact i:nth-child(1) { left:17%; }.biome-contact i:nth-child(2) { left:50%; transform:scale(.8); }.biome-contact i:nth-child(3) { right:18%; transform:scale(.65); }
-.map-river { position:absolute; top:-10%; left:60%; width:10%; height:125%; background:#61b8d4; border-right:4px solid #2f7392; border-left:4px solid #2f7392; transform:rotate(6deg); }
 .map-routes { position:absolute; inset:0; z-index:2; width:100%; height:100%; overflow:visible; }
-.map-routes path { fill:none; stroke:var(--paper); stroke-width:2.4; vector-effect:non-scaling-stroke; paint-order:stroke; filter:drop-shadow(0 2px 0 #8f7650); }
+.map-routes path { fill:none; stroke:var(--paper); stroke-width:2.7; stroke-linecap:square; vector-effect:non-scaling-stroke; paint-order:stroke; filter:drop-shadow(0 3px 0 #8f7650); }
 .map-routes circle { fill:var(--sun); stroke:var(--ink); stroke-width:1; vector-effect:non-scaling-stroke; }
-.map-routes .map-bridge-shadow { fill:#745d3c; stroke:var(--ink); stroke-width:1; vector-effect:non-scaling-stroke; }
-.map-routes .map-bridge-deck { fill:var(--sun); stroke:var(--ink); stroke-width:1.2; vector-effect:non-scaling-stroke; }
-.map-routes .map-bridge line { stroke:#a66d3d; stroke-width:1; vector-effect:non-scaling-stroke; }
 .map-trees { position:absolute; inset:0; z-index:1; }
 .map-trees i { position:absolute; width:1.4rem; height:1.8rem; background:var(--grass-dark); clip-path:polygon(50% 0,100% 100%,0 100%); }
 .map-trees i:nth-child(1){top:10%;left:8%}.map-trees i:nth-child(2){top:42%;left:17%}.map-trees i:nth-child(3){top:82%;left:8%}.map-trees i:nth-child(4){top:12%;right:9%}.map-trees i:nth-child(5){top:48%;right:12%}.map-trees i:nth-child(6){bottom:8%;right:26%}
 .map-clouds { position:absolute; top:7%; right:6%; z-index:1; color:var(--white); font-size:4rem; letter-spacing:1rem; opacity:.75; }
 .map-nodes { position:absolute; inset:0; z-index:3; }
-.map-start-node { position:absolute; top:50%; left:48%; z-index:4; display:flex; width:7rem; flex-direction:column; align-items:center; padding:0; border:0; background:transparent; transform:translate(-50%,-50%); cursor:pointer; }
+.map-start-node { position:absolute; top:58%; left:50%; z-index:4; display:flex; width:7rem; flex-direction:column; align-items:center; padding:0; border:0; background:transparent; transform:translate(-50%,-50%); cursor:pointer; }
 .map-start-flag { position:absolute; top:-1.4rem; left:3.8rem; padding:.22rem .35rem; color:var(--white); background:var(--coral); border:3px solid var(--ink); font-family:var(--pixel); font-size:.34rem; }
 .map-start-flag::before { position:absolute; top:100%; left:-3px; width:3px; height:1.3rem; content:""; background:var(--ink); }
 .map-start-avatar { position:relative; display:block; width:2.5rem; height:3.2rem; }
@@ -701,7 +697,7 @@ a {
 .growth-status i { height:.8rem; border:2px solid var(--white); }
 .growth-status .age-progress { position:relative; overflow:hidden; background:var(--cream); }
 .growth-status .age-progress em { display:block; width:0; height:100%; background:repeating-linear-gradient(90deg,var(--grass) 0 18px,transparent 18px 22px); transition:width 1.5s steps(25); }
-.growth-status .age-progress em.is-loaded { width:100%; }
+.growth-status .age-progress em.is-loaded { width:25%; }
 .growth-status p { margin:0; color:#c8d6e0; font-size:.8rem; }
 
 .reflection-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
@@ -930,5 +926,5 @@ a {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior:auto; }
   *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
-  .loading-fill { width:100%; }
+  .loading-fill { width:25%; }
 }

@@ -1,11 +1,11 @@
 // Edit this file to update the repeatable content on the homepage.
 window.SITE_CONTENT = {
   mapAreas: [
-    { name: "工作城", icon: "▣", x: 19, y: 25, target: "work" },
-    { name: "成长营地", icon: "↑", x: 50, y: 18, target: "growth" },
-    { name: "生活村", icon: "⌂", x: 80, y: 28, target: "life" },
-    { name: "思考塔", icon: "?", x: 76, y: 75, target: "reflection" },
-    { name: "像素信箱", icon: "@", x: 25, y: 75, target: "contact" },
+    { name: "工作城", icon: "▣", x: 18, y: 30, target: "work" },
+    { name: "成长营地", icon: "↑", x: 42, y: 20, target: "growth" },
+    { name: "生活村", icon: "⌂", x: 80, y: 30, target: "life" },
+    { name: "思考塔", icon: "?", x: 79, y: 70, target: "reflection" },
+    { name: "像素信箱", icon: "@", x: 25, y: 70, target: "contact" },
   ],
   growthItems: [
     { code: "QUEST 01", icon: "+", title: "持续学习", description: "对新问题保有耐心和好奇，把每天的输入变成真实经验。" },

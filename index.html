@@ -9,10 +9,10 @@
     <meta property="og:description" content="从学生到职场人，Loading… 一份持续更新的人生游戏存档。" />
     <meta property="og:type" content="website" />
     <title>Goldcook | New Game+</title>
-    <link rel="icon" href="favicon.svg?v=20260912-11" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260912-11" />
-    <script src="content.js?v=20260912-11" defer></script>
-    <script src="script.js?v=20260912-11" defer></script>
+    <link rel="icon" href="favicon.svg?v=20260912-12" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260912-12" />
+    <script src="content.js?v=20260912-12" defer></script>
+    <script src="script.js?v=20260912-12" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">跳到正文</a>
@@ -82,10 +82,10 @@
               这里记录一个职场新人的当前进度：继续学习强化学习，
               也认真练习工作、生活与成为成年人。
             </p>
-            <div class="loading-block" aria-label="年龄存档已从 0 加载到 25">
-              <div class="loading-meta"><span>LIFE SAVE · AGE</span><span><b data-age-value>00</b> / 25</span></div>
+            <div class="loading-block" aria-label="年龄进度：当前 25，满刻度 100">
+              <div class="loading-meta"><span>LIFE PROGRESS · AGE</span><span><b data-age-value>00</b> / 100</span></div>
               <div class="loading-track"><span class="loading-fill" data-age-fill></span></div>
-              <p>25 年经验值已载入，下一章节持续更新。</p>
+              <p>以 100 为完整刻度，当前存档位于 25。</p>
             </div>
             <div class="hero-actions">
               <a class="pixel-button pixel-button-primary" href="#map" data-screen-target="map">▶ 进入世界地图</a>
@@ -127,23 +127,14 @@
               <div class="map-biome biome-reflection"><i></i><i></i><i></i></div>
               <div class="map-biome biome-contact"><i></i><i></i><i></i></div>
             </div>
-            <div class="map-river" aria-hidden="true"></div>
             <svg class="map-routes" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M19 25 C29 31 40 41 48 50" />
-              <path d="M50 18 C49 30 48 41 48 50" />
-              <path d="M25 75 C33 65 41 56 48 50" />
-              <path d="M48 50 C54 50 59 50 64 50" />
-              <path d="M64 50 C70 43 76 34 80 28" />
-              <path d="M64 50 C68 60 72 68 76 75" />
-              <g class="map-bridge" aria-hidden="true">
-                <rect class="map-bridge-shadow" x="60.5" y="47.5" width="7" height="6" rx=".5" />
-                <rect class="map-bridge-deck" x="60" y="46.5" width="7" height="6" rx=".5" />
-                <line x1="61.5" y1="47" x2="61.5" y2="52" />
-                <line x1="63.5" y1="47" x2="63.5" y2="52" />
-                <line x1="65.5" y1="47" x2="65.5" y2="52" />
-              </g>
-              <circle cx="19" cy="25" r="1.2" /><circle cx="50" cy="18" r="1.2" />
-              <circle cx="80" cy="28" r="1.2" /><circle cx="76" cy="75" r="1.2" /><circle cx="25" cy="75" r="1.2" />
+              <path d="M50 58 C40 50 29 39 18 30" />
+              <path d="M50 58 C47 44 44 31 42 20" />
+              <path d="M50 58 C62 49 72 39 80 30" />
+              <path d="M50 58 C62 61 71 66 79 70" />
+              <path d="M50 58 C40 63 32 67 25 70" />
+              <circle cx="18" cy="30" r="1.2" /><circle cx="42" cy="20" r="1.2" />
+              <circle cx="80" cy="30" r="1.2" /><circle cx="79" cy="70" r="1.2" /><circle cx="25" cy="70" r="1.2" />
             </svg>
             <div class="map-trees" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <div class="map-clouds" aria-hidden="true">☁ ☁</div>
@@ -154,7 +145,7 @@
             </button>
             <div class="map-nodes" data-map-nodes></div>
           </div>
-          <p class="home-map-hint">五条道路通向五个地点。选一处进入，随时都能返回地图。</p>
+          <p class="home-map-hint">从开局据点出发，五条道路通向五个地点。探索后随时都能返回地图。</p>
         </div>
       </section>
 
@@ -193,9 +184,9 @@
           <p>进入职场不代表学习结束，而是开始把知识放进真实问题里。</p>
         </div>
         <div class="growth-grid" data-growth-items></div>
-        <div class="growth-status pixel-window reveal" aria-label="年龄存档已从 0 加载到 25">
-          <span>LIFE SAVE · AGE</span><strong><b data-age-value>00</b> / 25</strong>
-          <i class="age-progress" aria-hidden="true"><em data-age-fill></em></i><p>25 年经验已载入，保持好奇，继续升级。</p>
+        <div class="growth-status pixel-window reveal" aria-label="年龄进度：当前 25，满刻度 100">
+          <span>LIFE PROGRESS · AGE</span><strong><b data-age-value>00</b> / 100</strong>
+          <i class="age-progress" aria-hidden="true"><em data-age-fill></em></i><p>当前刻度 25，保持好奇，继续升级。</p>
         </div>
       </section>
 
