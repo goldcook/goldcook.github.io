@@ -9,10 +9,10 @@
     <meta property="og:description" content="从学生到职场人，Loading… 一份持续更新的人生游戏存档。" />
     <meta property="og:type" content="website" />
     <title>Goldcook | New Game+</title>
-    <link rel="icon" href="favicon.svg?v=20260912-7" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260912-7" />
-    <script src="content.js?v=20260912-7" defer></script>
-    <script src="script.js?v=20260912-7" defer></script>
+    <link rel="icon" href="favicon.svg?v=20260912-9" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260912-9" />
+    <script src="content.js?v=20260912-9" defer></script>
+    <script src="script.js?v=20260912-9" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">跳到正文</a>
@@ -43,19 +43,19 @@
     <aside class="floating-bgm" aria-label="悬浮背景音乐播放器" data-floating-bgm>
       <div class="floating-bgm-bar">
         <button class="floating-bgm-open" type="button" data-bgm-panel-toggle aria-expanded="false" aria-controls="floating-bgm-panel">
-          <span aria-hidden="true">♫</span><strong data-bgm-title aria-live="polite">Clouds After Work</strong><i data-bgm-panel-icon>+</i>
+          <span aria-hidden="true">♫</span><strong data-bgm-title aria-live="polite">晚风与云</strong><i data-bgm-panel-icon>+</i>
         </button>
         <button class="floating-bgm-play" type="button" data-bgm-toggle aria-label="播放 BGM" aria-pressed="false">▶</button>
       </div>
       <div class="floating-bgm-panel" id="floating-bgm-panel" data-bgm-panel>
-        <p>ORIGINAL BGM SELECT</p>
-        <div class="bgm-track-picker" data-bgm-tracks aria-label="选择原创 BGM"></div>
+        <p>最近最爱 · 像素印象</p>
+        <div class="bgm-track-picker" data-bgm-tracks aria-label="选择像素印象 BGM"></div>
         <div class="floating-bgm-controls">
-          <button type="button" data-bgm-prev aria-label="上一首原创 BGM">◀ PREV</button>
+          <button type="button" data-bgm-prev aria-label="上一首 BGM">◀ PREV</button>
           <label><span>VOL</span><input type="range" min="0" max="100" value="35" data-volume /></label>
-          <button type="button" data-bgm-next aria-label="下一首原创 BGM">NEXT ▶</button>
+          <button type="button" data-bgm-next aria-label="下一首 BGM">NEXT ▶</button>
         </div>
-        <small>三段旋律均为本站原创生成。</small>
+        <small>取自最近喜欢的音乐气质，旋律与编曲均为本站原创。</small>
       </div>
     </aside>
 
@@ -76,11 +76,11 @@
         <div class="hero-window pixel-window reveal">
           <div class="window-bar"><span>PLAYER_01</span><span>NEW GAME+</span></div>
           <div class="hero-content">
-            <p class="system-line">WELCOME BACK, GOLDCOOK.</p>
-            <h1 id="hero-title" tabindex="-1">从学生到职场人，<br /><span>LOADING...</span></h1>
+            <p class="system-line">WELCOME, TRAVELER.</p>
+            <h1 id="hero-title" tabindex="-1">欢迎来到<br /><span>GOLDCOOK 的世界</span></h1>
             <p class="hero-copy">
-              正在学习怎么工作，也在学习怎么生活。强化学习仍是主线任务；
-              听歌、看云、唱歌和朋友联机，负责恢复生命值。
+              这里记录一个职场新人的当前进度：继续学习强化学习，
+              也认真练习工作、生活与成为成年人。
             </p>
             <div class="loading-block" aria-label="职场 Landing 进行中">
               <div class="loading-meta"><span>CAREER LANDING</span><span>42%</span></div>
@@ -111,7 +111,7 @@
 
       <section class="section map-section game-screen" id="map" data-screen="map" aria-labelledby="map-title" hidden>
         <div class="section-head section-head-light reveal">
-          <p><span>MAP</span> WORLD SELECT / 世界地图</p><span class="section-coord">4 AREAS FOUND</span>
+          <p><span>MAP</span> WORLD SELECT / 世界地图</p><span class="section-coord">5 AREAS FOUND</span>
         </div>
         <div class="map-heading reveal">
           <div><p class="eyebrow">CHOOSE YOUR NEXT AREA</p><h2 id="map-title" tabindex="-1">选择下一站。</h2></div>
@@ -122,41 +122,46 @@
           <div class="map-canvas" aria-label="可交互的人生地图">
             <div class="map-river" aria-hidden="true"></div>
             <svg class="map-routes" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M20 25 C34 17 56 31 70 24" />
-              <path d="M70 24 C80 39 64 56 73 73" />
-              <path d="M73 73 C54 64 38 81 20 72" />
-              <path d="M20 72 C14 55 27 42 20 25" />
-              <path d="M20 25 C36 40 57 52 73 73" />
-              <rect class="map-bridge" x="45.5" y="23.5" width="9" height="5" />
-              <rect class="map-bridge map-bridge-diagonal" x="47" y="45" width="9" height="5" />
-              <circle cx="20" cy="25" r="1.2" /><circle cx="70" cy="24" r="1.2" />
-              <circle cx="73" cy="73" r="1.2" /><circle cx="20" cy="72" r="1.2" />
+              <path d="M19 25 C29 31 39 39 49 50" />
+              <path d="M50 18 C50 29 50 40 49 50" />
+              <path d="M80 28 C68 33 58 41 49 50" />
+              <path d="M70 75 C62 65 56 57 49 50" />
+              <path d="M25 75 C33 66 41 57 49 50" />
+              <g class="map-hub" aria-hidden="true">
+                <rect class="map-hub-shadow" x="46" y="47.5" width="6" height="6" rx=".5" />
+                <rect class="map-hub-deck" x="45.5" y="46.5" width="6" height="6" rx=".5" />
+                <line x1="47" y1="47" x2="47" y2="52" />
+                <line x1="48.5" y1="47" x2="48.5" y2="52" />
+                <line x1="50" y1="47" x2="50" y2="52" />
+              </g>
+              <circle cx="19" cy="25" r="1.2" /><circle cx="50" cy="18" r="1.2" />
+              <circle cx="80" cy="28" r="1.2" /><circle cx="70" cy="75" r="1.2" /><circle cx="25" cy="75" r="1.2" />
             </svg>
             <div class="map-trees" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <div class="map-clouds" aria-hidden="true">☁ ☁</div>
             <div class="map-nodes" data-map-nodes></div>
           </div>
-          <p class="home-map-hint">四个地点对应四段内容。道路已经连接到每一个目的地。</p>
+          <p class="home-map-hint">五条道路通向五个地点。选一处进入，随时都能返回地图。</p>
         </div>
       </section>
 
-      <section class="section save-section game-screen" id="save" data-screen="save" aria-labelledby="save-title" hidden>
+      <section class="section save-section work-section game-screen" id="work" data-screen="work" aria-labelledby="work-title" hidden>
         <div class="section-head reveal">
-          <p><span>01</span> SAVE FILE / 当前存档</p><span class="section-coord">X:2026 Y:NOW</span>
+          <p><span>01</span> WORK TOWN / 工作城</p><span class="section-coord">CAREER LANDING · 42%</span>
         </div>
         <div class="save-layout">
           <div class="save-intro reveal">
-            <p class="eyebrow">AUTO SAVED JUST NOW</p>
-            <h2 id="save-title" tabindex="-1">人在学习，<br />生活也在更新。</h2>
+            <p class="eyebrow">CURRENT CHECKPOINT</p>
+            <h2 id="work-title" tabindex="-1">从学生，<br />走进职场。</h2>
             <p>
-              刚进入职场不久，正在经历从学生到上班族的 Landing。
-              独自生活并不陌生，但怎样工作、怎样休息、怎样逐渐接住成年人的责任，都是新的关卡。
+              还在 Landing：学习新的协作方式、工作节奏和职业身份，
+              不急着一次通关，先把每一天过成可靠的经验值。
             </p>
           </div>
           <div class="save-slot pixel-window reveal">
             <div class="save-slot-head"><span>SLOT 01</span><span>PLAYING</span></div>
             <div class="save-time"><strong>00:∞</strong><span>PLAY TIME</span></div>
-            <div class="save-location"><span>CURRENT LOCATION</span><strong>职场 · LANDING ZONE</strong></div>
+            <div class="save-location"><span>CURRENT LOCATION</span><strong>工作城 · LANDING ZONE</strong></div>
             <div class="party-row">
               <span>SUPPORT PARTY</span>
               <div class="party-members"><span title="女朋友">GF</span><span title="家人">家</span><span title="朋友">友</span></div>
@@ -166,36 +171,51 @@
         </div>
       </section>
 
-      <section class="section lobby-section game-screen" id="lobby" data-screen="lobby" aria-labelledby="lobby-title" hidden>
+      <section class="section growth-section game-screen" id="growth" data-screen="growth" aria-labelledby="growth-title" hidden>
         <div class="section-head reveal">
-          <p><span>02</span> SIDE QUESTS / 生活侧面</p><span class="section-coord">HP RECOVERY AREA</span>
+          <p><span>02</span> GROWTH CAMP / 成长营地</p><span class="section-coord">2 QUESTS ACTIVE</span>
         </div>
-        <div class="lobby-heading reveal">
-          <p class="eyebrow">LIFE IS NOT ONLY THE MAIN QUEST</p>
-          <h2 id="lobby-title" tabindex="-1">下班之后，进入自由探索模式。</h2>
+        <div class="compact-scene-heading reveal">
+          <div><p class="eyebrow">KEEP LEARNING</p><h2 id="growth-title" tabindex="-1">学习是长期主线。</h2></div>
+          <p>进入职场不代表学习结束，而是开始把知识放进真实问题里。</p>
         </div>
-        <div class="side-quests" data-side-quests></div>
+        <div class="growth-grid" data-growth-items></div>
+        <div class="growth-status pixel-window reveal">
+          <span>LEARNING STREAK</span><strong>持续更新中</strong><i aria-hidden="true"></i><p>保持好奇，把理解带进下一次实践。</p>
+        </div>
+      </section>
+
+      <section class="section lobby-section game-screen" id="life" data-screen="life" aria-labelledby="life-title" hidden>
+        <div class="section-head reveal">
+          <p><span>03</span> LIFE VILLAGE / 生活村</p><span class="section-coord">HP RECOVERY AREA</span>
+        </div>
+        <div class="compact-scene-heading reveal">
+          <div><p class="eyebrow">AFTER WORK</p><h2 id="life-title" tabindex="-1">认真工作，也认真回血。</h2></div>
+          <p>看云、听歌、唱歌和一点轻松内容，让生活不只剩主线任务。</p>
+        </div>
+        <div class="side-quests compact-quests" data-side-quests></div>
         <div class="game-lobby pixel-window reveal">
           <div class="window-bar"><span>MULTIPLAYER LOBBY</span><span>FRIENDS ONLINE</span></div>
           <div class="game-lobby-copy">
-            <div><p class="eyebrow">READY?</p><h3>游戏好不好玩，<br />有时取决于和谁一起。</h3></div>
+            <div><p class="eyebrow">READY?</p><h3>联机的重点，<br />是朋友在线。</h3></div>
             <p>
-              从腾讯系竞技游戏，到 Steam 上适合一起闹腾的联机游戏。
-              胜负当然重要，但更重要的是大家还在同一个语音房间里。
+              竞技、合作、闹腾都行。胜负当然重要，
+              但更重要的是大家还在同一个语音房间里。
             </p>
           </div>
           <div class="game-tags" data-games aria-label="常玩的游戏"></div>
         </div>
       </section>
 
-      <section class="section thoughts-section game-screen" id="thoughts" data-screen="thoughts" aria-labelledby="thoughts-title" hidden>
+      <section class="section thoughts-section game-screen" id="reflection" data-screen="reflection" aria-labelledby="reflection-title" hidden>
         <div class="section-head reveal">
-          <p><span>03</span> CURRENT OBJECTIVES / 成长主线</p><span class="section-coord">5 OBJECTIVES ACTIVE</span>
+          <p><span>04</span> THINKING TOWER / 思考塔</p><span class="section-coord">3 SIGNALS FOUND</span>
         </div>
-        <div class="thoughts-layout">
-          <div class="thoughts-title reveal"><p class="eyebrow">THIS CHAPTER</p><h2 id="thoughts-title" tabindex="-1">这一阶段，<br />想把这些事慢慢做好。</h2></div>
-          <ol class="thought-list" data-thoughts></ol>
+        <div class="compact-scene-heading reveal">
+          <div><p class="eyebrow">CURRENT THOUGHTS</p><h2 id="reflection-title" tabindex="-1">在变化里，找自己的答案。</h2></div>
+          <p>最近的思考都和“如何成为现在的我”有关。</p>
         </div>
+        <div class="reflection-grid" data-reflections></div>
       </section>
 
       <section class="contact-section game-screen" id="contact" data-screen="contact" aria-labelledby="contact-title" hidden>
@@ -204,9 +224,9 @@
           <div class="mailbox-flag"></div><div class="mailbox-box">@</div><div class="mailbox-post"></div><div class="mailbox-grass"></div>
         </div>
         <div class="contact-copy reveal">
-          <p class="eyebrow">04 · MAILBOX</p>
-          <h2 id="contact-title" tabindex="-1">路过这里的话，<br />可以留下一封信。</h2>
-          <p>如果你也在学习、工作或认真生活，欢迎写信和我聊聊。</p>
+          <p class="eyebrow">05 · PIXEL MAILBOX</p>
+          <h2 id="contact-title" tabindex="-1">留下一封信。</h2>
+          <p>如果你也在学习、工作或认真生活，欢迎来聊聊。</p>
           <a class="email-address" href="mailto:goldcook4@gmail.com">goldcook4@gmail.com</a>
           <div class="contact-actions">
             <a class="pixel-button pixel-button-accent" href="mailto:goldcook4@gmail.com?subject=Hello%20from%20goldcook.github.io">✉ 写封邮件</a>
@@ -216,10 +236,5 @@
       </section>
     </main>
 
-    <footer class="site-footer">
-      <p>GOLDCOOK · <span data-year></span></p>
-      <p>KEEP LEARNING · KEEP LIVING</p>
-      <a href="#map" data-screen-target="map">↑ BACK TO MAP</a>
-    </footer>
   </body>
 </html>

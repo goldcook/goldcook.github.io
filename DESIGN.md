@@ -14,8 +14,9 @@ The site is a warm 16-bit RPG save file about entering working life while contin
 
 - The opening screen introduces Goldcook and leads to the world map.
 - The world map is the primary directory; top navigation does not duplicate every destination.
-- Save, life, growth, and mailbox are separate screens with a persistent return-to-map control.
+- Work, growth, life, reflection, and mailbox are parallel map locations with a persistent return-to-map control.
 - Map roads visually terminate at every destination, with bridges wherever routes cross the river.
+- Desktop scenes fit inside one viewport without vertical scrolling; mobile keeps a natural document flow.
 
 ## Content boundaries
 

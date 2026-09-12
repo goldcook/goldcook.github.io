@@ -9,7 +9,8 @@
     sides: document.querySelector("[data-side-quests]"),
     games: document.querySelector("[data-games]"),
     bgmTracks: document.querySelector("[data-bgm-tracks]"),
-    thoughts: document.querySelector("[data-thoughts]"),
+    growth: document.querySelector("[data-growth-items]"),
+    reflections: document.querySelector("[data-reflections]"),
   };
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -17,6 +18,12 @@
     <button class="map-node node-${escapeHtml(area.target)}" type="button" style="--x:${area.x}%;--y:${area.y}%" data-screen-target="${escapeHtml(area.target)}" aria-label="进入${escapeHtml(area.name)}">
       <span class="node-icon" aria-hidden="true"><b>${escapeHtml(area.icon)}</b></span><span class="node-label">${escapeHtml(area.name)}</span>
     </button>`).join("");
+
+  roots.growth.innerHTML = content.growthItems.map((item) => `
+    <article class="growth-card pixel-window reveal">
+      <div><span>${escapeHtml(item.code)}</span><b aria-hidden="true">${escapeHtml(item.icon)}</b></div>
+      <h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p>
+    </article>`).join("");
 
   roots.sides.innerHTML = content.sideQuests.map((item) => `
     <article class="side-card side-card-${escapeHtml(item.color)} reveal">
@@ -29,8 +36,8 @@
     <button type="button" data-bgm-track-index="${index}" aria-pressed="${index === 0}">
       <span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(track.subtitle)}</strong>
     </button>`).join("");
-  roots.thoughts.innerHTML = content.thoughts.map((thought, index) => `
-    <li class="reveal"><span>OBJECTIVE ${String(index + 1).padStart(2, "0")}</span><p>${escapeHtml(thought)}</p><i aria-hidden="true">→</i></li>`).join("");
+  roots.reflections.innerHTML = content.reflections.map((item) => `
+    <article class="reflection-card reveal"><span>${escapeHtml(item.code)}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p><i aria-hidden="true">→</i></article>`).join("");
 
   document.querySelectorAll("[data-year]").forEach((node) => { node.textContent = new Date().getFullYear(); });
 
@@ -62,8 +69,10 @@
   const visitedScreens = new Set();
   let lastVisitedScreen = null;
   let returningToMap = false;
+  const screenAliases = { save: "work", thoughts: "growth", lobby: "life" };
   const showScreen = (target, historyMode = "push", moveFocus = true) => {
-    const next = validScreens.has(target) ? target : "home";
+    const normalizedTarget = screenAliases[target] || target;
+    const next = validScreens.has(normalizedTarget) ? normalizedTarget : "home";
     const current = screens.find((screen) => !screen.hidden)?.dataset.screen || "home";
     if (next !== "home" && next !== "map") {
       visitedScreens.add(next);
@@ -154,9 +163,16 @@
   };
   const tickBgm = () => {
     const track = content.bgmTracks[currentBgmIndex];
-    playNote(track.melody[step % track.melody.length], Math.min(track.tempo / 1000 * 0.82, 0.2), track.lead, 0.28);
-    if (step % 2 === 0) playNote(track.bass[(step / 2) % track.bass.length], track.tempo / 1000 * 1.6, "triangle", 0.34);
-    if (step % 4 === 2) playNote(84, 0.05, "square", 0.08);
+    const melodyNote = track.melody[step % track.melody.length];
+    if (melodyNote) playNote(melodyNote, track.duration, track.lead, currentBgmIndex === 0 ? 0.2 : 0.27);
+    if (step % track.bassEvery === 0) {
+      const bassIndex = Math.floor(step / track.bassEvery) % track.bass.length;
+      playNote(track.bass[bassIndex], Math.max(track.duration * 1.7, 0.18), track.bassType, currentBgmIndex === 2 ? 0.22 : 0.3);
+    }
+    if (step % track.accentEvery === track.accentEvery - 1) {
+      const accentNote = currentBgmIndex === 0 ? 81 : currentBgmIndex === 1 ? 88 : 48;
+      playNote(accentNote, currentBgmIndex === 0 ? 0.3 : 0.045, currentBgmIndex === 0 ? "sine" : "square", 0.07);
+    }
     step += 1;
   };
   const startBgmLoop = () => {
