@@ -1,8 +1,81 @@
-# Goldcook 个人主页一期记录
+# Goldcook 个人主页一期交接文档
 
-更新日期：2026-09-12  
-正式网站：<https://goldcook.github.io/>  
+更新日期：2026-09-12
+
+正式网站：<https://goldcook.github.io/>
+
 公开仓库：<https://github.com/goldcook/goldcook.github.io>
+
+私有完整备份：`goldcook/goldcook-homepage-private`（需要仓库权限）
+
+这份文档主要写给下一位接手开发的 Agent。它不依赖本次对话、当前电脑或当前工作目录；只要能够访问 GitHub 仓库，就应该可以据此恢复项目、理解边界、完成修改并安全发布。
+
+## 0. 新环境接手指南
+
+### 0.1 先选择正确的仓库
+
+公开仓库是线上网站的发布源：
+
+```bash
+git clone https://github.com/goldcook/goldcook.github.io.git
+cd goldcook.github.io
+```
+
+私有仓库是完整备份，包含公开站点和 `private/` 私人档案。需要处理私人时间线时，应另外克隆到独立目录：
+
+```bash
+git clone https://github.com/goldcook/goldcook-homepage-private.git
+cd goldcook-homepage-private
+```
+
+两个仓库有不同的 Git 历史，不能互相合并，也不能把私有仓库设置成公开网站的远程仓库。不要在同一个工作目录里来回切换两个远程。
+
+### 0.2 配置提交身份
+
+这个项目统一使用：
+
+```bash
+git config user.name "goldcook"
+git config user.email "goldcook4@gmail.com"
+```
+
+不要使用其他工作邮箱、机器默认邮箱或旧提交身份。提交前运行 `git config user.name` 和 `git config user.email` 再确认一次。
+
+### 0.3 开始修改前检查
+
+```bash
+git status --short
+git branch --show-current
+git remote -v
+git log -1 --oneline
+```
+
+公开开发应位于 `main` 分支，远程应指向 `goldcook/goldcook.github.io`。如果工作区已有未提交改动，必须先理解改动来源，不能直接重置、覆盖或清理。
+
+如果使用多个 Agent，只允许一个集成负责人修改主工作区；其他写代码的 Agent 必须使用独立 Git worktree。审计 Agent 应保持只读。
+
+### 0.4 启动项目
+
+项目没有安装依赖、构建步骤或后端服务。使用任意静态 HTTP 服务器即可：
+
+```bash
+python3 -m http.server 4173 --bind 127.0.0.1
+```
+
+然后分别检查：
+
+- 所有者模式：<http://127.0.0.1:4173/>
+- 公开访客模式：<http://goldcook.localhost:4173/>
+
+所有者模式只在当前工作区存在 `private/timeline.local.js` 时显示可解锁的私人档案。公开访客模式必须和正式网站保持相同的隐私边界。
+
+### 0.5 外部配置
+
+公开 GitHub 仓库已经配置 Actions Secret `QQ_PLAYLIST_ID`，用于每周同步公开 QQ 音乐歌单。Secret 的值不在代码中，也不需要从浏览器登录状态恢复。
+
+接手 Agent 不应读取、打印、提交或重新推断这个 Secret。除非用户明确更换歌单，否则保持现有 Secret 和工作流不变即可。
+
+GitHub Pages 从公开仓库 `main` 分支根目录发布。项目没有自定义域名，正式地址始终是 <https://goldcook.github.io/>。
 
 ## 1. 一期定位
 
@@ -91,6 +164,22 @@
 
 网站没有框架和构建步骤，使用原生 HTML、CSS 和 JavaScript，可以直接由 GitHub Pages 托管。
 
+### 运行时约定
+
+- 每个可导航场景使用 `data-screen="screen-id"`。
+- 所有入口使用 `data-screen-target="screen-id"`，由 `script.js` 统一处理哈希、浏览器历史、焦点和返回地图逻辑。
+- 公开场景会加入 `validScreens`；`private-archive` 只有在本机成功加载私人脚本后才会启用。
+- 地图节点写入 `[data-map-nodes]`，地图 SVG 道路写入 `[data-map-routes]`。
+- 时间树节点写入 `[data-tree-nodes]`，树枝写入 `[data-tree-routes]`。
+- 可重复内容优先放在 `content.js`，不要在 HTML 中复制一份相同数据。
+- 页面没有服务端能力。任何留言、表单、数据库或定时内容都需要可信的外部服务或 GitHub Actions。
+
+### 缓存版本
+
+`index.html` 通过 `?v=YYYYMMDD-NN` 给 `favicon.svg`、`styles.css`、`content.js` 和 `script.js` 添加缓存版本。修改样式或脚本并正式发布时，应同时递增四处版本号，避免 GitHub Pages 或浏览器继续使用旧资源。
+
+`content.js` 中的 `siteEdition` 是页面向访客展示的人工版本标记。自动更新 QQ 音乐时不要修改它；只有用户确认一次新的主页版本时才更新。
+
 ## 5. 可扩展数据
 
 ### 新增地图区域
@@ -176,6 +265,8 @@ QQ 音乐同步流程：
 
 私人内容只保存在私有备份仓库的 `private/` 中。公开仓库通过 `.gitignore` 忽略整个 `private/` 目录。发布前必须运行 `git ls-files 'private/**'`，确认输出为空。
 
+不要只依赖 `.gitignore`。每次发布前还应搜索本次讨论中可能出现的真实地点、学校、公司、人物姓名、账号链接和私人摘录。公开概览可以描述阶段和主题，但不能把私人档案改写后直接批量发布。
+
 ## 8. 本地预览与公开模式
 
 启动本地服务器：
@@ -226,6 +317,35 @@ git ls-files 'private/**'
 
 私有备份仓库必须始终保持 Private，不能启用 GitHub Pages，也不能将其历史合并回公开仓库。
 
+### 推荐的双仓库同步方法
+
+以公开工作区作为网站代码的集成源。公开版本验证完成后，将这些文件同步到私有仓库：
+
+- `.github/`
+- `scripts/`
+- `docs/`
+- `.nojekyll`
+- `404.html`
+- `DESIGN.md`
+- `content.js`
+- `favicon.svg`
+- `index.html`
+- `script.js`
+- `styles.css`
+
+以下内容不能从公开仓库覆盖到私有仓库：
+
+- 私有仓库的 `README.md`，因为它包含醒目的私有备份警告。
+- 私有仓库的 `.gitignore`，因为它需要跟踪 `private/`。
+- 私有仓库的 `private/` 目录。
+- 私有仓库的 `.git/` 历史和远程配置。
+
+同步后对公共文件逐一执行 `cmp` 或等价比较，再分别在两个仓库提交和推送。公开仓库与私有仓库使用不同提交，不做 cherry-pick、merge 或 force-push 来保持同步。
+
+### 发布完成的判断标准
+
+只看到 `git push` 成功不代表 Pages 已经更新。发布后应请求正式首页并确认 HTML 中引用了最新的 `?v=` 资源版本，然后在正式域名做一次桌面和手机检查。
+
 ## 11. 下一阶段候选方向
 
 下一阶段不需要一次全部实现，可以按真实内容逐步生长：
@@ -238,6 +358,15 @@ git ls-files 'private/**'
 - 根据真实手机使用感受继续调整字号、地图高度和悬浮播放器位置。
 - 如果未来需要匿名留言，再选择可信的表单服务；不要在纯静态页面中直接暴露密钥。
 
+### 当前明确没有实现的功能
+
+- 杂谈书屋目前没有真实文章或外链。
+- 首页目前没有启用任何社交媒体入口。
+- 来信驿站只有 `mailto:`，没有匿名留言后端。
+- QQ 音乐只提供官方歌曲页面入口，没有在站内代理或嵌入完整音频。
+- 私人档案没有远程登录或远程解锁能力，只支持本机静态文件。
+- 网站没有 CMS、数据库、搜索、统计分析或自动抓取社交媒体内容。
+
 ## 12. 下一次接续开发
 
 开始下一次修改前，先确认三件事：
@@ -247,3 +376,18 @@ git ls-files 'private/**'
 3. 发布前是否已经在公开访客模式、桌面和手机三个环境检查。
 
 一期已经完成了稳定的地图导航、内容边界和扩展骨架。下一阶段应优先增加真实想分享的内容，而不是为了丰富页面继续堆叠装饰或说明。
+
+### 给接手 Agent 的完成清单
+
+一次修改只有满足以下条件才算完成：
+
+1. 已说明改动属于公开内容还是私人内容。
+2. 已在公开访客模式验证没有私人脚本或私人正文。
+3. 已运行语法检查、`git diff --check` 和 `git ls-files 'private/**'`。
+4. 已检查桌面 `1466×871` 与手机 `390×844`。
+5. 地图新增节点时已检查所有点击热区互不重叠。
+6. 修改 CSS 或 JavaScript 时已递增 `index.html` 的资源缓存版本。
+7. 公开提交使用 Goldcook Gmail 身份，并已确认远程仓库正确。
+8. 正式发布必须得到用户明确确认，预览确认不能自动视为发布授权。
+9. 公开发布完成后，已同步并推送私有完整备份。
+10. 最终回复应提供正式网址、提交编号、验证结果和仍未实现的内容。
